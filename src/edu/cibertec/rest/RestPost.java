@@ -118,7 +118,8 @@ public class RestPost {
 
 			json.addProperty("message", "Email Disponible");
 			json.addProperty("response", true);
-			log.error("El email disponible");
+			result = json.toString();
+			log.info("El email disponible");
 
 			log.info("---Finaliza busqueda cuentas---");
 		} catch (Exception e) {
@@ -277,7 +278,7 @@ public class RestPost {
 		@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 		@Produces(MediaType.APPLICATION_JSON)
 		public String updateReview( ReviewInsert rev) {
-			log.info("entro POST: postReview()");
+			log.info("entro POST: updateReview()");
 
 			JsonObject json = new JsonObject();
 			String result = "";
@@ -322,7 +323,7 @@ public class RestPost {
 
 
 
-			log.info("salio POST: postReview()");
+			log.info("salio POST: updateReview()");
 			return result;
 		}
 
