@@ -27,6 +27,12 @@ public class Partner {
 	private String createdAt;
 	@OneToMany(mappedBy="partner",cascade=CascadeType.PERSIST)
 	private Collection<Local>locals = new ArrayList<Local>();
+	public Collection<Local> getLocals() {
+		return locals;
+	}
+	public void setLocals(Collection<Local> locals) {
+		this.locals = locals;
+	}
 	public int getId() {
 		return id;
 	}

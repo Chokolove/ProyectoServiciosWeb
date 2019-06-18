@@ -1,5 +1,9 @@
 package edu.cibertec.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,6 +31,19 @@ public class Local {
 	private String anticipation;
 	private String createdAt;
 	private String deletedAt;
+	@OneToMany(mappedBy="local", cascade= CascadeType.PERSIST)
+	private Collection<LocalWorkingWeekDay>localWorkingWeekDays=new ArrayList<LocalWorkingWeekDay>();
+	@OneToMany(mappedBy="local", cascade= CascadeType.PERSIST)
+	private Collection<LocalNonWorkingDay>localNonWorkingDays = new ArrayList<LocalNonWorkingDay>();
+	@OneToMany(mappedBy="local", cascade= CascadeType.PERSIST)
+	private Collection<SoccerField>soccerFields = new ArrayList<SoccerField>();
+	
+	public Collection<LocalWorkingWeekDay> getLocalWorkingWeekDays() {
+		return localWorkingWeekDays;
+	}
+	public void setLocalWorkingWeekDays(Collection<LocalWorkingWeekDay> localWorkingWeekDays) {
+		this.localWorkingWeekDays = localWorkingWeekDays;
+	}
 	public int getId() {
 		return id;
 	}

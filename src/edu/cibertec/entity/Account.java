@@ -30,6 +30,12 @@ public class Account  {
 	public int getId() {
 		return id;
 	}
+	public Collection<Partner> getParteners() {
+		return parteners;
+	}
+	public void setParteners(Collection<Partner> parteners) {
+		this.parteners = parteners;
+	}
 	public void setId(int id) {
 		this.id = id;
 	}
