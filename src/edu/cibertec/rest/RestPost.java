@@ -15,31 +15,17 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import edu.cibertec.dto.LoginDTO;
-import edu.cibertec.dto.ProfileDTO;
-import edu.cibertec.dto.ReviewDTO;
-import edu.cibertec.dto.ReviewInsert;
-import edu.cibertec.dto.UsuarioDTO;
 import edu.cibertec.entity.Account;
-import edu.cibertec.entity.Local;
-import edu.cibertec.entity.Profile;
-import edu.cibertec.entity.Review;
 import edu.cibertec.persistence.service.AccountServiceImpl;
-import edu.cibertec.persistence.service.LocalServiceImpl;
-import edu.cibertec.persistence.service.ProfileServiceImpl;
-import edu.cibertec.persistence.service.ReviewServiceImpl;
 import edu.cibertec.util.Util;
 
 @Path("/post")
 public class RestPost {
 
 	AccountServiceImpl accService = new AccountServiceImpl();
-	ProfileServiceImpl profService = new ProfileServiceImpl();
-	ReviewServiceImpl revService = new ReviewServiceImpl();
-	LocalServiceImpl locService = new LocalServiceImpl();
 
 	static final Logger log = Logger.getLogger(RestPost.class);
-
+/*
 	//http://localhost:8080/api-rest/post/login/
 	@POST
 	@Path("/login")
@@ -326,5 +312,5 @@ public class RestPost {
 			log.info("salio POST: updateReview()");
 			return result;
 		}
-
+*/
 }

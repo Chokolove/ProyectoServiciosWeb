@@ -3,24 +3,17 @@ package edu.cibertec.dto;
 import java.io.Serializable;
 
 public class AccountDTO implements Serializable{
-	
+
 	private int id;
-	private String email;
 	private String password;
-	private int accType;
-	private int status;
-	
+	private String confirmedAt;
+	private String lockedAt;
+	private String lastLogin;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
 	}
 	public String getPassword() {
 		return password;
@@ -28,18 +21,23 @@ public class AccountDTO implements Serializable{
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getAccType() {
-		return accType;
+	public String getConfirmedAt() {
+		return confirmedAt;
 	}
-	public void setAccType(int accType) {
-		this.accType = accType;
+	public void setConfirmedAt(String confirmedAt) {
+		this.confirmedAt = confirmedAt;
 	}
-	public int getStatus() {
-		return status;
+	public String getLockedAt() {
+		return lockedAt;
 	}
-	public void setStatus(int status) {
-		this.status = status;
+	public void setLockedAt(String lockedAt) {
+		this.lockedAt = lockedAt;
 	}
-	
+	public String getLastLogin() {
+		return lastLogin;
+	}
+	public void setLastLogin(String lastLogin) {
+		this.lastLogin = lastLogin;
+	}
 	
 }

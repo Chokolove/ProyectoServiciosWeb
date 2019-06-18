@@ -16,32 +16,22 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(name="tb_account")
-public class Account {
+@Table(name="account")
+public class Account  {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
-	private String email;
 	private String password;
-	private int accType;
-	private int status;
-	@OneToMany(mappedBy="admin", cascade= CascadeType.PERSIST)
-	private Collection<Local> locales = new ArrayList<Local>();
-	@OneToMany(mappedBy = "account", cascade = CascadeType.PERSIST)
-	private Collection<Profile> profiles = new ArrayList<Profile>();
-	@OneToMany(mappedBy = "account", cascade = CascadeType.PERSIST)
-	private Collection<Review> reviews = new ArrayList<Review>();
+	private String confirmedAt;
+	private String lockedAt;
+	private String lastLogin;
+	@OneToMany(mappedBy="account", cascade= CascadeType.PERSIST)
+	private Collection<Partner> parteners = new ArrayList<Partner>();
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
-	}
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
 	}
 	public String getPassword() {
 		return password;
@@ -49,35 +39,23 @@ public class Account {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getAccType() {
-		return accType;
+	public String getConfirmedAt() {
+		return confirmedAt;
 	}
-	public void setAccType(int accType) {
-		this.accType = accType;
+	public void setConfirmedAt(String confirmedAt) {
+		this.confirmedAt = confirmedAt;
 	}
-	public int getStatus() {
-		return status;
+	public String getLockedAt() {
+		return lockedAt;
 	}
-	public void setStatus(int status) {
-		this.status = status;
+	public void setLockedAt(String lockedAt) {
+		this.lockedAt = lockedAt;
 	}
-	public Collection<Local> getLocales() {
-		return locales;
+	public String getLastLogin() {
+		return lastLogin;
 	}
-	public void setLocales(Collection<Local> locales) {
-		this.locales = locales;
-	}
-	public Collection<Profile> getProfiles() {
-		return profiles;
-	}
-	public void setProfiles(Collection<Profile> profiles) {
-		this.profiles = profiles;
-	}
-	public Collection<Review> getReviews() {
-		return reviews;
-	}
-	public void setReviews(Collection<Review> reviews) {
-		this.reviews = reviews;
+	public void setLastLogin(String lastLogin) {
+		this.lastLogin = lastLogin;
 	}
 	
 	

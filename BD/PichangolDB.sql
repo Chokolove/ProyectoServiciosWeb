@@ -5,123 +5,135 @@ CREATE DATABASE Pichangol;
 USE Pichangol;
 
 
-CREATE TABLE IF NOT EXISTS tb_account(
+CREATE TABLE IF NOT EXISTS Account(
 id int auto_increment  not null,
-email varchar(70) not null,
-password varchar(30) not null,
-accType char(1) not null,
-status char(1) not null,
+password varchar(70) not null,
+confirmedAt datetime not null,
+lockedAt datetime null,
+lastLogin datetime null,
 PRIMARY KEY (id)
 );
 
 
-CREATE TABLE IF NOT EXISTS tb_profile(
-id int auto_increment not null,
-account_id int ,
-full_name varchar(70) not null,
-phone1 varchar(9),
-phone2 varchar(9),
-phone3 varchar(9),
-dni char(8),
-created_at datetime default now(),
-updated_at datetime default now(),
-status int not null,
+CREATE TABLE IF NOT EXISTS Partner(
+id int auto_increment  not null,
+accountId int not null,
+firstName varchar(255) not null,
+lastName varchar(255) not null,
+createdAt datetime not null,
 PRIMARY KEY (id),
-FOREIGN KEY (account_id) REFERENCES tb_account(id)
+FOREIGN KEY (accountId) REFERENCES Account(id)
 );
 
 
 
-CREATE TABLE IF NOT EXISTS tb_local(
+
+
+CREATE TABLE IF NOT EXISTS `Local`(
 id int auto_increment  not null,
-admin_id int not null,
-name varchar(200) not null,
-address varchar(200) not null,
-description varchar(400),
+partnerId int not null,
+name varchar(255) not null,
+description varchar(255) not null,
+address varchar(255) not null,
 latitude float not null,
 longitude float not null,
+anticipation int not null,
 created_at datetime default now(),
-updated_at datetime default now(),
 deleted_at datetime null,
 status char(1) not null,
 PRIMARY KEY (id),
-FOREIGN KEY (admin_id) REFERENCES tb_account(id)
+FOREIGN KEY (partnerId) REFERENCES Partner(id)
 );
 
 
-CREATE TABLE IF NOT EXISTS tb_day(
+CREATE TABLE IF NOT EXISTS LocalWorkingWeekDay(
 id int auto_increment  not null,
-local_id int not null,
-dayn varchar(40) not null,
-begin_hour varchar(55) not null,
-end_hour varchar(55) not null,
-status char(1) not null,
+localId int not null,
+`day` char(1) not null,
+`start` int not null,
+`end` int not null,
+createdAt datetime null,
 PRIMARY KEY (id),
-FOREIGN KEY (local_id) REFERENCES tb_local(id)
+FOREIGN KEY (localId) REFERENCES `Local`(id)
 );
 
-
-
-CREATE TABLE IF NOT EXISTS tb_court(
+CREATE TABLE IF NOT EXISTS LocalNonWorkingDay(
 id int auto_increment  not null,
-local_id int not null,
-capacity int not null,
+localId int not null,
+`date` date not null,
+reason varchar(500) null,
+createdAt datetime null,
+PRIMARY KEY (id),
+FOREIGN KEY (localId) REFERENCES `Local`(id)
+);
+
+
+CREATE TABLE IF NOT EXISTS SoccerField(
+id int auto_increment  not null,
+localId int not null,
+description varchar(255) not null,
 price decimal(6,2) not null,
-status char(1) not null,
+createdAt datetime null,
+deletedAt datetime null,
 PRIMARY KEY (id),
-FOREIGN KEY (local_id) REFERENCES tb_local(id)
+FOREIGN KEY (localId) REFERENCES `Local`(id)
+);
+
+CREATE TABLE IF NOT EXISTS SoccesFieldPhoto(
+id int auto_increment  not null,
+soccerFieldId int not null,
+photoUrl varchar(255) not null,
+description varchar(255) not null,
+PRIMARY KEY (id),
+FOREIGN KEY (soccerFieldId) REFERENCES SoccerField(id)
 );
 
 
-
-
-
-
-CREATE TABLE IF NOT EXISTS tb_match(
-id int auto_increment not null,
-court_id int not null,
-user_id int not null,
-price decimal(6,2) not null,
-paid_amount decimal(6,2) not null,
-reserved_at datetime not null,
-match_date datetime not null,
-match_hours int not null,
+CREATE TABLE IF NOT EXISTS SoccerFieldMaintenance(
+id int auto_increment  not null,
+soccerFieldId int not null,
+`date` date not null,
+`start` int not null,
+`end` int not null,
+createdAt datetime null,
 PRIMARY KEY (id),
-FOREIGN KEY (court_id) REFERENCES tb_court(id),
-FOREIGN KEY (user_id) REFERENCES tb_account(id)
+FOREIGN KEY (soccerFieldId) REFERENCES SoccerField(id)
 );
 
-
-
-
-
-CREATE TABLE IF NOT EXISTS tb_review(
-id int auto_increment not null,
-account_id int not null,
-local_id int not null,
-stars int not null,
-commentary varchar(400) not null,
-PRIMARY KEY (id),
-FOREIGN KEY (account_id) REFERENCES tb_account(id),
-FOREIGN KEY (local_id) REFERENCES tb_local(id)
+CREATE TABLE IF NOT EXISTS Guest(
+id int auto_increment  not null,
+firstName varchar(255) not null,
+lastName varchar(255) not null,
+phone varchar(255) not null,
+email varchar(255) not null,
+createdAt datetime null,
+PRIMARY KEY (id)
 );
 
-INSERT INTO `tb_account`(`email`, `password`, `accType`, `status`) VALUES ("asd@asd.com","facil123","1",1);
-INSERT INTO `tb_account`(`email`, `password`, `accType`, `status`) VALUES ("qwe@asd.com","facil123","2",1);
+CREATE TABLE IF NOT EXISTS Customer(
+id int auto_increment  not null,
+accountId int not null,
+firstName varchar(255) not null,
+lastName varchar(255) not null,
+birthday date not null,
+phone varchar(255) not null,
+email varchar(255) not null,
+createdAt datetime null,
+PRIMARY KEY (id),
+FOREIGN KEY (accountId) REFERENCES Account(id)
+);
 
-INSERT INTO `tb_local`(`admin_id`, `name`, `address`, `description`, `latitude`, `longitude`, `created_at`, `updated_at`, `deleted_at`, `status`) VALUES (1,"Cancha Martir","Calle Mártir José Olaya 114","Cancha 1",-12.119978,-77.030222,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,null,1);
-INSERT INTO `tb_local`(`admin_id`, `name`, `address`, `description`, `latitude`, `longitude`, `created_at`, `updated_at`, `deleted_at`, `status`) VALUES (1,"Cancha Miraflores","Miraflores 15074","Cancha 2",-12.122946,-77.032856,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,null,1);
-INSERT INTO `tb_local`(`admin_id`, `name`,  `address`, `description`, `latitude`, `longitude`, `created_at`, `updated_at`, `deleted_at`, `status`) VALUES (1,"Cancha Larco","Av Jose Larco 770","Cancha 3",-12.125553,-77.029340,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,null,1);
-
-INSERT INTO `tb_review`(`account_id`, `local_id`, `stars`, `commentary`) VALUES (2,1,4,"Prueba texto 1");
-INSERT INTO `tb_review`(`account_id`, `local_id`, `stars`, `commentary`) VALUES (2,2,4,"Prueba texto 2");
-INSERT INTO `tb_review`(`account_id`, `local_id`, `stars`, `commentary`) VALUES (2,3,4,"Prueba texto 3");
-INSERT INTO `tb_review`(`account_id`, `local_id`, `stars`, `commentary`) VALUES (2,1,5,"Prueba texto 4");
-
-INSERT INTO `tb_profile`(`account_id`, `full_name`, `phone1`, `phone2`, `phone3`, `dni`, `created_at`, `updated_at`, `status`) VALUES (1,"Pepito Suarez",999,888,777,987,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,1);
-
-insert into tb_profile values (null,2,'Juan Alberto','993303222','999556454','977474112','77410022',default,default,1);
-
-INSERT INTO `tb_local`(`admin_id`, `name`,  `address`, `description`, `latitude`, `longitude`, `created_at`, `updated_at`, `deleted_at`, `status`) VALUES (2,"Polideportivo Contigo Peru","Av. Ernesto Diez Canseco 482","Polideportivo con canchas grandes de cesped artificial, incluye equipo deportivo.",-12.122294,-77.028323,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,null,1);
-
+CREATE TABLE IF NOT EXISTS Reservation(
+id int auto_increment  not null,
+soccerFieldId int not null,
+reserverId int not null,
+reserverType varchar(255) not null,
+`date` date not null,
+`start` int not null,
+`end` int not null,
+chargeId int not null,
+createdAt datetime null,
+PRIMARY KEY (id),
+FOREIGN KEY (soccerFieldId) REFERENCES SoccerField(id)
+);
 

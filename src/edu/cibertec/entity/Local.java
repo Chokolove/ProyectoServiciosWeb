@@ -1,9 +1,5 @@
 package edu.cibertec.entity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,58 +9,53 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
-@Table(name="tb_local")
+@Table(name="local")
 public class Local {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	@ManyToOne
-	@JoinColumn(name = "admin_id")
-	private Account admin;
+	@JoinColumn(name="partnerId")
+	private Partner partner;
 	private String name;
-	private String address;
 	private String description;
+	private String address;
 	private double latitude;
 	private double longitude;
-	private String created_at;
-	private String updated_at;
-	private String deleted_at;
-	private int status;
-	@OneToMany(mappedBy = "local", cascade = CascadeType.PERSIST)
-	private Collection<Review> reviews = new ArrayList<Review>();
+	private String anticipation;
+	private String createdAt;
+	private String deletedAt;
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
-	public Account getAdmin() {
-		return admin;
+	public Partner getPartner() {
+		return partner;
 	}
-	public void setAdmin(Account admin) {
-		this.admin = admin;
+	public void setPartner(Partner partner) {
+		this.partner = partner;
 	}
-	
 	public String getName() {
 		return name;
 	}
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
 	public String getDescription() {
 		return description;
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	public double getLatitude() {
 		return latitude;
@@ -78,36 +69,23 @@ public class Local {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-	public String getCreated_at() {
-		return created_at;
+	public String getAnticipation() {
+		return anticipation;
 	}
-	public void setCreated_at(String created_at) {
-		this.created_at = created_at;
+	public void setAnticipation(String anticipation) {
+		this.anticipation = anticipation;
 	}
-	public String getUpdated_at() {
-		return updated_at;
+	public String getCreatedAt() {
+		return createdAt;
 	}
-	public void setUpdated_at(String updated_at) {
-		this.updated_at = updated_at;
+	public void setCreatedAt(String createdAt) {
+		this.createdAt = createdAt;
 	}
-	public String getDeleted_at() {
-		return deleted_at;
+	public String getDeletedAt() {
+		return deletedAt;
 	}
-	public void setDeleted_at(String deleted_at) {
-		this.deleted_at = deleted_at;
+	public void setDeletedAt(String deletedAt) {
+		this.deletedAt = deletedAt;
 	}
-	public int getStatus() {
-		return status;
-	}
-	public void setStatus(int status) {
-		this.status = status;
-	}
-	public Collection<Review> getReviews() {
-		return reviews;
-	}
-	public void setReviews(Collection<Review> reviews) {
-		this.reviews = reviews;
-	}
-	
 	
 }

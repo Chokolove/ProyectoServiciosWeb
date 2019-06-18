@@ -12,18 +12,9 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
 import edu.cibertec.dto.AccountDTO;
-import edu.cibertec.dto.LocalDTO;
-import edu.cibertec.dto.ProfileDTO;
-import edu.cibertec.dto.ReviewDTO;
 import edu.cibertec.entity.Account;
-import edu.cibertec.entity.Local;
-import edu.cibertec.entity.Profile;
-import edu.cibertec.entity.Review;
 import edu.cibertec.persistence.service.AccountServiceImpl;
 import edu.cibertec.persistence.service.IAccountService;
-import edu.cibertec.persistence.service.LocalServiceImpl;
-import edu.cibertec.persistence.service.ProfileServiceImpl;
-import edu.cibertec.persistence.service.ReviewServiceImpl;
 import edu.cibertec.util.Util;
 
 @Path("/get")
@@ -32,10 +23,30 @@ public class RestGet {
 	static final Logger log = Logger.getLogger(RestGet.class);
 
 	AccountServiceImpl accService = new AccountServiceImpl();
-	LocalServiceImpl locService = new LocalServiceImpl();
-	ProfileServiceImpl profService = new ProfileServiceImpl();
-	ReviewServiceImpl revService = new ReviewServiceImpl();
 
+	//http://localhost:8080/api-rest/get/obtenerDatosAccount/
+	@GET
+	@Path("/obtenerDatosAccount")
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<AccountDTO> obtenerDatosAccount() {
+		log.info("entro obtenerDatosAccount()");
+		List<AccountDTO> listaAccount = new ArrayList<AccountDTO>();
+		List<Account> listaAccJPA = new ArrayList<Account>();
+
+		try {
+			listaAccJPA = accService.getAccounts();
+			for(Account acc:listaAccJPA) {
+				listaAccount.add(Util.accJPAtoDTO(acc));
+			}
+			log.info("Finaliza busqueda");
+		} catch (Exception e) {
+			log.fatal("Exception: ", e);
+		}
+		log.info("Saliendo de obtenerDatosAccount()");
+		return listaAccount;
+	}
+
+	/*
 	//http://localhost:8080/api-rest/get/obtenerdatoslocal/
 	@GET
 	@Path("/obtenerdatoslocal")
@@ -176,20 +187,20 @@ public class RestGet {
 		public Review obetenerRevXAcc(@PathParam("p_id_acc") int idLoc, @PathParam("p_id_loc") int idAcc) {
 			log.info("entro obetenerRevXAcc()");
 			Review rev = new Review();
-			
+
 			List<Review> listaRev = null;
-			
+
 			try {
 				listaRev = revService.getReviews();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
-			
+
 			log.info("salio obetenerRevXAcc()");
 			return rev;
 		}
-*/
+	 */
 
 
 
