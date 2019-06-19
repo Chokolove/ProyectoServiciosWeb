@@ -1,11 +1,16 @@
 package edu.cibertec.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -21,6 +26,12 @@ public class SoccerField {
 	private double price;
 	private String createdAt;
 	private String deletedAt;
+	@OneToMany(mappedBy="soccerField", cascade= CascadeType.PERSIST)
+	private Collection<SoccesFieldPhoto>soccesFieldPhotos = new ArrayList<SoccesFieldPhoto>();
+	@OneToMany(mappedBy="soccerField", cascade= CascadeType.PERSIST)
+	private Collection<SoccerFieldMaintenance>soccerFieldMaintenances = new ArrayList<SoccerFieldMaintenance>();
+	@OneToMany(mappedBy="soccerField", cascade= CascadeType.PERSIST)
+	private Collection<Reservation>reservations = new ArrayList<Reservation>();
 	public int getId() {
 		return id;
 	}

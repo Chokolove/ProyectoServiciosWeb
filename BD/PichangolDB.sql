@@ -137,3 +137,11 @@ PRIMARY KEY (id),
 FOREIGN KEY (soccerFieldId) REFERENCES SoccerField(id)
 );
 
+INSERT INTO `account` (`id`, `password`, `confirmedAt`, `lockedAt`, `lastLogin`) VALUES (NULL, 'asd', '2019-06-18 19:40:00', NULL, NULL);
+INSERT INTO `account` (`id`, `password`, `confirmedAt`, `lockedAt`, `lastLogin`) VALUES (NULL, 'zxc', '2019-06-18 19:40:00', NULL, NULL);
+
+INSERT INTO `partner` (`id`, `accountId`, `firstName`, `lastName`, `createdAt`) VALUES (NULL, '1', 'Juan', 'Perez', '2019-06-18 19:41:00');
+INSERT INTO `partner` (`id`, `accountId`, `firstName`, `lastName`, `createdAt`) VALUES (NULL, '2', 'Sofia', 'Sanchez', '2019-06-18 19:41:00');
+
+INSERT INTO `local` (`id`, `partnerId`, `name`, `description`, `address`, `latitude`, `longitude`, `anticipation`, `created_at`, `deleted_at`, `status`) VALUES (NULL, '1', 'Polideportivo Sede Norte', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris ', 'Francisco de Paula Camino 220', '-12.120751', ' -77.032059', '0', CURRENT_TIMESTAMP, NULL, '1');
+INSERT INTO `local` (`id`, `partnerId`, `name`, `description`, `address`, `latitude`, `longitude`, `anticipation`, `created_at`, `deleted_at`, `status`) VALUES (NULL, '2', 'Polideportivo Sede Miraflores', 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."', 'Calle Alcanfores 298', '-12.122534', '-77.027810', '0', CURRENT_TIMESTAMP, NULL, '1');

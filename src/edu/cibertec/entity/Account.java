@@ -27,6 +27,8 @@ public class Account  {
 	private String lastLogin;
 	@OneToMany(mappedBy="account", cascade= CascadeType.PERSIST)
 	private Collection<Partner> parteners = new ArrayList<Partner>();
+	@OneToMany(mappedBy="account", cascade= CascadeType.PERSIST)
+	private Collection<Customer> customers = new ArrayList<Customer>();
 	public int getId() {
 		return id;
 	}
