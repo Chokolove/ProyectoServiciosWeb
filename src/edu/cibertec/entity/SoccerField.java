@@ -27,7 +27,7 @@ public class SoccerField {
 	private String createdAt;
 	private String deletedAt;
 	@OneToMany(mappedBy="soccerField", cascade= CascadeType.PERSIST)
-	private Collection<SoccesFieldPhoto>soccesFieldPhotos = new ArrayList<SoccesFieldPhoto>();
+	private Collection<SoccerFieldPhoto>soccerFieldPhotos = new ArrayList<SoccerFieldPhoto>();
 	@OneToMany(mappedBy="soccerField", cascade= CascadeType.PERSIST)
 	private Collection<SoccerFieldMaintenance>soccerFieldMaintenances = new ArrayList<SoccerFieldMaintenance>();
 	@OneToMany(mappedBy="soccerField", cascade= CascadeType.PERSIST)

@@ -14,7 +14,7 @@
 		<class>edu.cibertec.entity.LocalWorkingWeekDay</class>
 		<class>edu.cibertec.entity.LocalNonWorkingDay</class>
 		<class>edu.cibertec.entity.SoccerField</class>
-		<class>edu.cibertec.entity.SoccesFieldPhoto</class>
+		<class>edu.cibertec.entity.SoccerFieldPhoto</class>
 		<class>edu.cibertec.entity.SoccerFieldMaintenance</class>
 		<class>edu.cibertec.entity.Guest</class>
 		<class>edu.cibertec.entity.Customer</class>
