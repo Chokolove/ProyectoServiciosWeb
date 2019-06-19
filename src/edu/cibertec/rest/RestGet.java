@@ -12,9 +12,12 @@ import javax.ws.rs.core.MediaType;
 import org.apache.log4j.Logger;
 
 import edu.cibertec.dto.AccountDTO;
+import edu.cibertec.dto.LocalDTO;
 import edu.cibertec.entity.Account;
+import edu.cibertec.entity.Local;
 import edu.cibertec.persistence.service.AccountServiceImpl;
 import edu.cibertec.persistence.service.IAccountService;
+import edu.cibertec.persistence.service.LocalServiceImpl;
 import edu.cibertec.util.Util;
 
 @Path("/get")
@@ -23,6 +26,7 @@ public class RestGet {
 	static final Logger log = Logger.getLogger(RestGet.class);
 
 	AccountServiceImpl accService = new AccountServiceImpl();
+	LocalServiceImpl locService = new LocalServiceImpl();
 
 	//http://localhost:8080/api-rest/get/obtenerDatosAccount/
 	@GET
@@ -46,7 +50,7 @@ public class RestGet {
 		return listaAccount;
 	}
 
-	/*
+
 	//http://localhost:8080/api-rest/get/obtenerdatoslocal/
 	@GET
 	@Path("/obtenerdatoslocal")
@@ -59,7 +63,9 @@ public class RestGet {
 		try {
 			listJPA = locService.getLocals();
 			for(Local jpa:listJPA) {
-				listaLocales.add(Util.localJPAtoDTO(jpa));
+				if(jpa.getDeletedAt() == null) {
+					listaLocales.add(Util.localJPAtoDTO(jpa));
+				}
 			}
 			log.info("Finaliza busqueda");
 		} catch (Exception e) {
@@ -68,7 +74,7 @@ public class RestGet {
 		log.info("Saliendo de obtenerDatosLocales()");
 		return listaLocales;
 	}
-
+	/*
 	//http://localhost:8080/api-rest/get/obtenerdatoslocal/M
 	@GET
 	@Path("/obtenerdatoslocal/{p_dir}")

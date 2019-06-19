@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -28,8 +29,10 @@ public class Local {
 	private String address;
 	private double latitude;
 	private double longitude;
-	private String anticipation;
+	private int anticipation;
+	@Column(name="created_at")
 	private String createdAt;
+	@Column(name="deleted_at")
 	private String deletedAt;
 	@OneToMany(mappedBy="local", cascade= CascadeType.PERSIST)
 	private Collection<LocalWorkingWeekDay>localWorkingWeekDays=new ArrayList<LocalWorkingWeekDay>();
@@ -86,11 +89,23 @@ public class Local {
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
-	public String getAnticipation() {
+	public int getAnticipation() {
 		return anticipation;
 	}
-	public void setAnticipation(String anticipation) {
+	public void setAnticipation(int anticipation) {
 		this.anticipation = anticipation;
+	}
+	public Collection<LocalNonWorkingDay> getLocalNonWorkingDays() {
+		return localNonWorkingDays;
+	}
+	public void setLocalNonWorkingDays(Collection<LocalNonWorkingDay> localNonWorkingDays) {
+		this.localNonWorkingDays = localNonWorkingDays;
+	}
+	public Collection<SoccerField> getSoccerFields() {
+		return soccerFields;
+	}
+	public void setSoccerFields(Collection<SoccerField> soccerFields) {
+		this.soccerFields = soccerFields;
 	}
 	public String getCreatedAt() {
 		return createdAt;
