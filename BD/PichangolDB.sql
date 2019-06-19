@@ -145,3 +145,5 @@ INSERT INTO `partner` (`id`, `accountId`, `firstName`, `lastName`, `createdAt`) 
 
 INSERT INTO `local` (`id`, `partnerId`, `name`, `description`, `address`, `latitude`, `longitude`, `anticipation`, `created_at`, `deleted_at`, `status`) VALUES (NULL, '1', 'Polideportivo Sede Norte', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris ', 'Francisco de Paula Camino 220', '-12.120751', ' -77.032059', '0', CURRENT_TIMESTAMP, NULL, '1');
 INSERT INTO `local` (`id`, `partnerId`, `name`, `description`, `address`, `latitude`, `longitude`, `anticipation`, `created_at`, `deleted_at`, `status`) VALUES (NULL, '2', 'Polideportivo Sede Miraflores', 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."', 'Calle Alcanfores 298', '-12.122534', '-77.027810', '0', CURRENT_TIMESTAMP, NULL, '1');
+
+
