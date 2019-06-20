@@ -1,5 +1,7 @@
 package edu.cibertec.rest;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,7 +14,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
-import org.primefaces.component.calendar.Calendar;
 
 import edu.cibertec.dto.AccountDTO;
 import edu.cibertec.dto.LocNonDaysDTO;
@@ -99,8 +100,10 @@ public class RestGet {
 		@GET
 		@Path("/getLocalIdDate/{p_idLocal}")
 		@Produces(MediaType.APPLICATION_JSON)
-		public LocalAdvDTO getLocalIdDate(@PathParam("p_idLocal") int id, @QueryParam("date") int date) {
+		public LocalAdvDTO getLocalIdDate(@PathParam("p_idLocal") int id, @QueryParam("date") long date) {
 			log.info("Entro getLocalIdDate()");
+			Date dat = new Date(date);
+			log.info("FECHA:  ");
 			
 			LocalAdvDTO localAdcDto = new LocalAdvDTO();
 			
@@ -118,6 +121,10 @@ public class RestGet {
 			
 			try {
 				Local loc = locService.getLocal(id);
+
+				localAdcDto.setId(loc.getId());
+				localAdcDto.setNombre(loc.getName());
+				localAdcDto.setAddress(loc.getAddress());
 				
 				listWorkingWeekDay = lwwdService.getLocalWorkingWeekDaysXLocal(id);
 				for(LocalWorkingWeekDay lwwd:listWorkingWeekDay) {
