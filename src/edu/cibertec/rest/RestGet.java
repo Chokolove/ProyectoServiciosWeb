@@ -1,23 +1,35 @@
 package edu.cibertec.rest;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import org.apache.log4j.Logger;
+import org.primefaces.component.calendar.Calendar;
 
 import edu.cibertec.dto.AccountDTO;
+import edu.cibertec.dto.LocNonDaysDTO;
+import edu.cibertec.dto.LocWorDayDTO;
 import edu.cibertec.dto.LocalDTO;
+import edu.cibertec.dto.SoccerFieldDTO;
 import edu.cibertec.entity.Account;
 import edu.cibertec.entity.Local;
+import edu.cibertec.entity.LocalNonWorkingDay;
+import edu.cibertec.entity.LocalWorkingWeekDay;
+import edu.cibertec.entity.SoccerField;
 import edu.cibertec.persistence.service.AccountServiceImpl;
 import edu.cibertec.persistence.service.IAccountService;
+import edu.cibertec.persistence.service.LocalNonWorkingDayServiceImpl;
 import edu.cibertec.persistence.service.LocalServiceImpl;
+import edu.cibertec.persistence.service.LocalWorkingWeekDayServiceImpl;
+import edu.cibertec.persistence.service.SoccerFieldServiceImpl;
 import edu.cibertec.util.Util;
 
 @Path("/get")
@@ -27,7 +39,10 @@ public class RestGet {
 
 	AccountServiceImpl accService = new AccountServiceImpl();
 	LocalServiceImpl locService = new LocalServiceImpl();
-
+	SoccerFieldServiceImpl socService = new SoccerFieldServiceImpl();
+	LocalWorkingWeekDayServiceImpl lwwdService = new LocalWorkingWeekDayServiceImpl();
+	LocalNonWorkingDayServiceImpl  lnwdService = new LocalNonWorkingDayServiceImpl();
+/*
 	//http://localhost:8080/api-rest/get/obtenerDatosAccount/
 	@GET
 	@Path("/obtenerDatosAccount")
@@ -49,7 +64,7 @@ public class RestGet {
 		log.info("Saliendo de obtenerDatosAccount()");
 		return listaAccount;
 	}
-
+*/
 
 	//http://localhost:8080/api-rest/get/obtenerdatoslocal/
 	@GET
@@ -74,6 +89,67 @@ public class RestGet {
 		log.info("Saliendo de obtenerDatosLocales()");
 		return listaLocales;
 	}
+	
+	//http://localhost:8080/api-rest/get/getLocalIdDate/1?date=1560995283785
+		@GET
+		@Path("/getLocalIdDate/{p_idLocal}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public LocalDTO getLocalIdDate(@PathParam("p_idLocal") int id, @QueryParam("date") int date) {
+			log.info("Entro getLocalIdDate()");
+			
+			LocalDTO local = new LocalDTO();
+			
+			List<SoccerField> listSocce = new ArrayList<SoccerField>();
+			List<SoccerFieldDTO> listSocDTO = new ArrayList<SoccerFieldDTO>();
+			
+			List<LocalWorkingWeekDay> listWorkingWeekDay = new ArrayList<LocalWorkingWeekDay>();
+			List<LocWorDayDTO> listLocWorDayDTO = new ArrayList<LocWorDayDTO>();
+			
+			List<LocalNonWorkingDay> listNonWorkingDay = new ArrayList<LocalNonWorkingDay>();
+			List<LocNonDaysDTO> listNonDaysDTOs = new ArrayList<LocNonDaysDTO>();
+			
+			try {
+				Local loc = locService.getLocal(id);
+				local = Util.localJPAtoDTO(loc);
+				
+				listWorkingWeekDay = lwwdService.getLocalWorkingWeekDaysXLocal(id);
+				for(LocalWorkingWeekDay lwwd:listWorkingWeekDay) {
+					log.info("ID:   "+lwwd.getId());
+					log.info("DAY:  "+lwwd.getDay());
+					log.info("START:"+lwwd.getStart());
+					log.info("END:  "+lwwd.getEnd());
+				}
+				
+				listNonWorkingDay = lnwdService.getLocalNonWorkingDaysXLocal(id);
+				for(LocalNonWorkingDay lwwd:listNonWorkingDay) {
+					log.info("ID:   "+lwwd.getId());
+					log.info("Date:  "+lwwd.getDate());
+					log.info("Reason:"+lwwd.getReason());
+				}
+				
+				
+				
+				listSocce = socService.getSoccerFieldsXLocal(id);
+				for(SoccerField so:listSocce) {
+					log.info("ID: "+so.getId());
+					log.info("DES:"+so.getDescription());
+				}
+				
+				
+				
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			log.info("Saliendo de getLocalIdDate()");
+			return local;
+		}
+	
+	
+	
 	/*
 	//http://localhost:8080/api-rest/get/obtenerdatoslocal/M
 	@GET

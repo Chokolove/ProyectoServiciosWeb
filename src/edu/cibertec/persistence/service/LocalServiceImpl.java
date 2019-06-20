@@ -15,22 +15,31 @@ public class LocalServiceImpl implements ILocalService{
 	
 	@Override
 	public Local getLocal(Integer id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		
+		log.info("Se ingreso a getLocal()");
+		Local loc= null;
+
+		localJPA.createEM();
+		loc= localJPA.get(id);
+		localJPA.releaseEM();
+		
+		log.info("Saliendo de getLocal()");
+		
+		return loc;
 	}
 
 	@Override
 	public List<Local> getLocals() throws Exception {
 		log.info("Se ingreso a getLocals()");
-		List<Local>accs= null;
+		List<Local>locs= null;
 
 		localJPA.createEM();
-		accs= localJPA.getAll();
+		locs= localJPA.getAll();
 		localJPA.releaseEM();
 		
 		log.info("Saliendo de getLocals()");
 		
-		return accs;
+		return locs;
 	}
 
 	@Override
