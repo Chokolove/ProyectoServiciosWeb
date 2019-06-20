@@ -17,6 +17,7 @@ import org.primefaces.component.calendar.Calendar;
 import edu.cibertec.dto.AccountDTO;
 import edu.cibertec.dto.LocNonDaysDTO;
 import edu.cibertec.dto.LocWorDayDTO;
+import edu.cibertec.dto.LocalAdvDTO;
 import edu.cibertec.dto.LocalDTO;
 import edu.cibertec.dto.ReservedDTO;
 import edu.cibertec.dto.SoccerFieldDTO;
@@ -98,10 +99,10 @@ public class RestGet {
 		@GET
 		@Path("/getLocalIdDate/{p_idLocal}")
 		@Produces(MediaType.APPLICATION_JSON)
-		public LocalDTO getLocalIdDate(@PathParam("p_idLocal") int id, @QueryParam("date") int date) {
+		public LocalAdvDTO getLocalIdDate(@PathParam("p_idLocal") int id, @QueryParam("date") int date) {
 			log.info("Entro getLocalIdDate()");
 			
-			LocalDTO local = new LocalDTO();
+			LocalAdvDTO localAdcDto = new LocalAdvDTO();
 			
 			List<SoccerField> listSocce = new ArrayList<SoccerField>();
 			List<SoccerFieldDTO> listSocDTO = new ArrayList<SoccerFieldDTO>();
@@ -117,7 +118,6 @@ public class RestGet {
 			
 			try {
 				Local loc = locService.getLocal(id);
-				local = Util.localJPAtoDTO(loc);
 				
 				listWorkingWeekDay = lwwdService.getLocalWorkingWeekDaysXLocal(id);
 				for(LocalWorkingWeekDay lwwd:listWorkingWeekDay) {
@@ -160,7 +160,7 @@ public class RestGet {
 			
 			
 			log.info("Saliendo de getLocalIdDate()");
-			return local;
+			return localAdcDto;
 		}
 	
 	
