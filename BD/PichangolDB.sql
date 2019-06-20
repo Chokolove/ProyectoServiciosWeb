@@ -209,17 +209,17 @@ INSERT INTO `LocalNonWorkingDay` (`id`, `localId`, `date`, `reason`,`createdAt`)
 
 
 /*Miraflores*/
-INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,1,'Polideportivo Sede Norte',80.0,CURRENT_TIMESTAMP,null);
-INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,1,'Polideportivo Sede Miraflores',80.0,CURRENT_TIMESTAMP,null);
-INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,1,'Complejo Deportivo "Chino" Vasquez',80.0,CURRENT_TIMESTAMP,null);
-INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,1,'Futbol En Lima SAC - Campo San Jorge',80.0,CURRENT_TIMESTAMP,null);
+INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,1,'Cancha 1 Miraflores',80.0,CURRENT_TIMESTAMP,null);
+INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,1,'Cancha 2 Miraflores',80.0,CURRENT_TIMESTAMP,null);
+INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,1,'Cancha 3 Miraflores',80.0,CURRENT_TIMESTAMP,null);
+INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,1,'Cancha 4 Miraflores',80.0,CURRENT_TIMESTAMP,null);
 
 /*Surco*/
-INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,2,'CANCHA LA 10',80.0,CURRENT_TIMESTAMP,null);
-INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,2,'Cancha La Floresta',80.0,CURRENT_TIMESTAMP,null);
-INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,2,'Cancha de grass Surco',80.0,CURRENT_TIMESTAMP,null);
-INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,2,'Cancha De Futbol Surco',80.0,CURRENT_TIMESTAMP,null);
-INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,2,'Fútbol Plaza',80.0,CURRENT_TIMESTAMP,null);
+INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,2,'Cancha 1 Surco',80.0,CURRENT_TIMESTAMP,null);
+INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,2,'Cancha 1 Surco',80.0,CURRENT_TIMESTAMP,null);
+INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,2,'Cancha 1 Surco',80.0,CURRENT_TIMESTAMP,null);
+INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,2,'Cancha 1 Surco',80.0,CURRENT_TIMESTAMP,null);
+INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,2,'Cancha 1 Surco',80.0,CURRENT_TIMESTAMP,null);
 
 /*Cercado de Lima*/
 INSERT INTO `SoccerField` (`id`, `localId`, `description`, `price`, `createdAt`, `deletedAt`) VALUES (null,10,'Cancha de Fútbol 6',80.0,CURRENT_TIMESTAMP,null);
