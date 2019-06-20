@@ -2,10 +2,15 @@ package edu.cibertec.persistence.service;
 
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import edu.cibertec.entity.Reservation;
+import edu.cibertec.entity.SoccerField;
+import edu.cibertec.persistence.jpa.dao.ReservationJPA;
 
 public class ReservationServiceImpl implements IReservation{
-
+	static final Logger log = Logger.getLogger(ReservationServiceImpl.class);
+	ReservationJPA reservationJPA = new ReservationJPA();
 	@Override
 	public Reservation getReservation(Integer id) throws Exception {
 		// TODO Auto-generated method stub
@@ -20,8 +25,16 @@ public class ReservationServiceImpl implements IReservation{
 
 	@Override
 	public List<Reservation> getReservationsXField(int id) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("Se ingreso a getReservationsXField()");
+		List<Reservation>resList= null;
+
+		reservationJPA.createEM();
+		resList= reservationJPA.getAllxField(id);
+		reservationJPA.releaseEM();
+		
+		log.info("Saliendo de getReservationsXField()");
+		
+		return resList;
 	}
 
 	@Override

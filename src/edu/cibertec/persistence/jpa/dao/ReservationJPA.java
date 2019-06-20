@@ -16,7 +16,7 @@ public class ReservationJPA extends GenericoJPA{
 		return query.getResultList();
 	}
 
-	public List<Reservation> getAllxLocal(int id) throws Exception {
+	public List<Reservation> getAllxField(int id) throws Exception {
 		TypedQuery<Reservation> query = em.createQuery("FROM Reservation where soccerField.id = ?1",Reservation.class);
 		query.setParameter(1, id);
 		return query.getResultList();

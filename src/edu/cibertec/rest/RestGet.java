@@ -18,17 +18,20 @@ import edu.cibertec.dto.AccountDTO;
 import edu.cibertec.dto.LocNonDaysDTO;
 import edu.cibertec.dto.LocWorDayDTO;
 import edu.cibertec.dto.LocalDTO;
+import edu.cibertec.dto.ReservedDTO;
 import edu.cibertec.dto.SoccerFieldDTO;
 import edu.cibertec.entity.Account;
 import edu.cibertec.entity.Local;
 import edu.cibertec.entity.LocalNonWorkingDay;
 import edu.cibertec.entity.LocalWorkingWeekDay;
+import edu.cibertec.entity.Reservation;
 import edu.cibertec.entity.SoccerField;
 import edu.cibertec.persistence.service.AccountServiceImpl;
 import edu.cibertec.persistence.service.IAccountService;
 import edu.cibertec.persistence.service.LocalNonWorkingDayServiceImpl;
 import edu.cibertec.persistence.service.LocalServiceImpl;
 import edu.cibertec.persistence.service.LocalWorkingWeekDayServiceImpl;
+import edu.cibertec.persistence.service.ReservationServiceImpl;
 import edu.cibertec.persistence.service.SoccerFieldServiceImpl;
 import edu.cibertec.util.Util;
 
@@ -42,6 +45,7 @@ public class RestGet {
 	SoccerFieldServiceImpl socService = new SoccerFieldServiceImpl();
 	LocalWorkingWeekDayServiceImpl lwwdService = new LocalWorkingWeekDayServiceImpl();
 	LocalNonWorkingDayServiceImpl  lnwdService = new LocalNonWorkingDayServiceImpl();
+	ReservationServiceImpl reservService = new ReservationServiceImpl();
 /*
 	//http://localhost:8080/api-rest/get/obtenerDatosAccount/
 	@GET
@@ -108,6 +112,9 @@ public class RestGet {
 			List<LocalNonWorkingDay> listNonWorkingDay = new ArrayList<LocalNonWorkingDay>();
 			List<LocNonDaysDTO> listNonDaysDTOs = new ArrayList<LocNonDaysDTO>();
 			
+			List<Reservation> listReservation = new ArrayList<Reservation>();
+			List<ReservedDTO> listReservedDTO = new ArrayList<ReservedDTO>();
+			
 			try {
 				Local loc = locService.getLocal(id);
 				local = Util.localJPAtoDTO(loc);
@@ -128,11 +135,19 @@ public class RestGet {
 				}
 				
 				
-				
 				listSocce = socService.getSoccerFieldsXLocal(id);
 				for(SoccerField so:listSocce) {
 					log.info("ID: "+so.getId());
 					log.info("DES:"+so.getDescription());
+					
+					listReservation = reservService.getReservationsXField(so.getId());
+					for(Reservation rev:listReservation) {
+						log.info(""+rev.getId());
+						log.info(""+rev.getDate());
+						log.info(""+rev.getStart());
+						log.info(""+rev.getEnd());
+					}
+					
 				}
 				
 				
