@@ -48,7 +48,7 @@ public class RestGet {
 	LocalWorkingWeekDayServiceImpl lwwdService = new LocalWorkingWeekDayServiceImpl();
 	LocalNonWorkingDayServiceImpl  lnwdService = new LocalNonWorkingDayServiceImpl();
 	ReservationServiceImpl reservService = new ReservationServiceImpl();
-/*
+	/*
 	//http://localhost:8080/api-rest/get/obtenerDatosAccount/
 	@GET
 	@Path("/obtenerDatosAccount")
@@ -70,7 +70,7 @@ public class RestGet {
 		log.info("Saliendo de obtenerDatosAccount()");
 		return listaAccount;
 	}
-*/
+	 */
 
 	//http://localhost:8080/api-rest/get/obtenerdatoslocal/
 	@GET
@@ -95,83 +95,88 @@ public class RestGet {
 		log.info("Saliendo de obtenerDatosLocales()");
 		return listaLocales;
 	}
-	
-	//http://localhost:8080/api-rest/get/getLocalIdDate/1?date=1560995283785
-		@GET
-		@Path("/getLocalIdDate/{p_idLocal}")
-		@Produces(MediaType.APPLICATION_JSON)
-		public LocalAdvDTO getLocalIdDate(@PathParam("p_idLocal") int id, @QueryParam("date") long date) {
-			log.info("Entro getLocalIdDate()");
-			Date dat = new Date(date);
-			log.info("FECHA:  ");
-			
-			LocalAdvDTO localAdcDto = new LocalAdvDTO();
-			
-			List<SoccerField> listSocce = new ArrayList<SoccerField>();
-			List<SoccerFieldDTO> listSocDTO = new ArrayList<SoccerFieldDTO>();
-			
-			List<LocalWorkingWeekDay> listWorkingWeekDay = new ArrayList<LocalWorkingWeekDay>();
-			List<LocWorDayDTO> listLocWorDayDTO = new ArrayList<LocWorDayDTO>();
-			
-			List<LocalNonWorkingDay> listNonWorkingDay = new ArrayList<LocalNonWorkingDay>();
-			List<LocNonDaysDTO> listNonDaysDTOs = new ArrayList<LocNonDaysDTO>();
-			
-			List<Reservation> listReservation = new ArrayList<Reservation>();
-			List<ReservedDTO> listReservedDTO = new ArrayList<ReservedDTO>();
-			
-			try {
-				Local loc = locService.getLocal(id);
 
-				localAdcDto.setId(loc.getId());
-				localAdcDto.setNombre(loc.getName());
-				localAdcDto.setAddress(loc.getAddress());
-				
-				listWorkingWeekDay = lwwdService.getLocalWorkingWeekDaysXLocal(id);
-				for(LocalWorkingWeekDay lwwd:listWorkingWeekDay) {
-					log.info("ID:   "+lwwd.getId());
-					log.info("DAY:  "+lwwd.getDay());
-					log.info("START:"+lwwd.getStart());
-					log.info("END:  "+lwwd.getEnd());
-				}
-				
-				listNonWorkingDay = lnwdService.getLocalNonWorkingDaysXLocal(id);
-				for(LocalNonWorkingDay lwwd:listNonWorkingDay) {
-					log.info("ID:   "+lwwd.getId());
-					log.info("Date:  "+lwwd.getDate());
-					log.info("Reason:"+lwwd.getReason());
-				}
-				
-				
-				listSocce = socService.getSoccerFieldsXLocal(id);
-				for(SoccerField so:listSocce) {
-					log.info("ID: "+so.getId());
-					log.info("DES:"+so.getDescription());
-					
-					listReservation = reservService.getReservationsXField(so.getId());
-					for(Reservation rev:listReservation) {
-						log.info(""+rev.getId());
-						log.info(""+rev.getDate());
-						log.info(""+rev.getStart());
-						log.info(""+rev.getEnd());
-					}
-					
-				}
-				
-				
-				
-				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	//http://localhost:8080/api-rest/get/getLocalIdDate/1?date=1560995283785
+	@GET
+	@Path("/getLocalIdDate/{p_idLocal}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public LocalAdvDTO getLocalIdDate(@PathParam("p_idLocal") int id, @QueryParam("date") long date) {
+		log.info("Entro getLocalIdDate()");
+
+		int day1 = new Date(date).getDay();
+		int day2 = new Date().getDay();
+
+		log.info(day1);
+		log.info(day2);
+
+
+
+		LocalAdvDTO localAdcDto = new LocalAdvDTO();
+
+		List<SoccerField> listSocce = new ArrayList<SoccerField>();
+		List<SoccerFieldDTO> listSocDTO = new ArrayList<SoccerFieldDTO>();
+
+		List<LocalWorkingWeekDay> listWorkingWeekDay = new ArrayList<LocalWorkingWeekDay>();
+		List<LocWorDayDTO> listLocWorDayDTO = new ArrayList<LocWorDayDTO>();
+
+		List<LocalNonWorkingDay> listNonWorkingDay = new ArrayList<LocalNonWorkingDay>();
+		List<LocNonDaysDTO> listNonDaysDTOs = new ArrayList<LocNonDaysDTO>();
+
+		List<Reservation> listReservation = new ArrayList<Reservation>();
+		List<ReservedDTO> listReservedDTO = new ArrayList<ReservedDTO>();
+
+		try {
+			Local loc = locService.getLocal(id);
+
+			localAdcDto.setId(loc.getId());
+			localAdcDto.setNombre(loc.getName());
+			localAdcDto.setAddress(loc.getAddress());
+			localAdcDto.setLatitude(""+loc.getLatitude());
+			localAdcDto.setLongitude(""+loc.getLongitude());
+
+
+			listWorkingWeekDay = lwwdService.getLocalWorkingWeekDaysXLocal(id);
+			for(LocalWorkingWeekDay lwwd:listWorkingWeekDay) {
+				listLocWorDayDTO.add(Util.LocWorDayJPAtoDTO(lwwd));	
 			}
-			
-			
-			log.info("Saliendo de getLocalIdDate()");
-			return localAdcDto;
+			localAdcDto.setListWorDays(listLocWorDayDTO);
+
+			listNonWorkingDay = lnwdService.getLocalNonWorkingDaysXLocal(id);
+			for(LocalNonWorkingDay lwwd:listNonWorkingDay) {
+				listNonDaysDTOs.add(Util.LocNonDaysJPAtoDTO(lwwd));
+			}
+			localAdcDto.setListNonDays(listNonDaysDTOs);
+
+
+			listSocce = socService.getSoccerFieldsXLocal(id);
+			for(SoccerField so:listSocce) {
+				SoccerFieldDTO dto = new SoccerFieldDTO();
+				dto = Util.SoccerFieldJPAtoDTO(so);
+
+				listReservation = reservService.getReservationsXField(so.getId());
+				for(Reservation rev:listReservation) {
+					listReservedDTO.add(Util.ReservedJPAtoDTO(rev));
+				}
+				dto.setReservedDTOs(listReservedDTO);
+				listSocDTO.add(dto);
+			}
+			localAdcDto.setListSocField(listSocDTO);
+
+
+
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	
-	
-	
+
+
+		log.info("Saliendo de getLocalIdDate()");
+		return localAdcDto;
+
+
+	}
+
 	/*
 	//http://localhost:8080/api-rest/get/obtenerdatoslocal/M
 	@GET
@@ -305,14 +310,6 @@ public class RestGet {
 			return rev;
 		}
 	 */
-
-
-
-
-
-
-
-
 
 
 

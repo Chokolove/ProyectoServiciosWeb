@@ -1,13 +1,13 @@
 package edu.cibertec.dto;
 
 public class ReservedDTO {
-	private int day;
+	private String day;
 	private int start;
 	private int end;
-	public int getDay() {
+	public String getDay() {
 		return day;
 	}
-	public void setDay(int day) {
+	public void setDay(String day) {
 		this.day = day;
 	}
 	public int getStart() {
