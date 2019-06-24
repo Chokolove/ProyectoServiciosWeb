@@ -1,6 +1,7 @@
 package edu.cibertec.rest;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -103,12 +104,8 @@ public class RestGet {
 	public LocalAdvDTO getLocalIdDate(@PathParam("p_idLocal") int id, @QueryParam("date") long date) {
 		log.info("Entro getLocalIdDate()");
 
-		int day1 = new Date(date).getDay();
-		int day2 = new Date().getDay();
-
-		log.info(day1);
-		log.info(day2);
-
+		Date day1 = new Date(date);
+		LocalDate localDate1 = day1.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
 
 		LocalAdvDTO localAdcDto = new LocalAdvDTO();
@@ -152,12 +149,21 @@ public class RestGet {
 			for(SoccerField so:listSocce) {
 				SoccerFieldDTO dto = new SoccerFieldDTO();
 				dto = Util.SoccerFieldJPAtoDTO(so);
-
+				
 				listReservation = reservService.getReservationsXField(so.getId());
 				for(Reservation rev:listReservation) {
-					listReservedDTO.add(Util.ReservedJPAtoDTO(rev));
+					
+					LocalDate localDate2 = LocalDate.parse(rev.getDate()); 
+					
+					
+					if(localDate1.equals(localDate2) && so.getId()==rev.getSoccerField().getId()) {
+						log.info("FECHA iguales");
+						listReservedDTO.add(Util.ReservedJPAtoDTO(rev));
+					}else {
+						log.info("nancy");
+					}
+					dto.setReservedDTOs(listReservedDTO);
 				}
-				dto.setReservedDTOs(listReservedDTO);
 				listSocDTO.add(dto);
 			}
 			localAdcDto.setListSocField(listSocDTO);
