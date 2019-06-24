@@ -248,3 +248,10 @@ INSERT INTO `Guest` (`id`, `firstName`, `lastName`, `phone`, `email`, `createdAt
 INSERT INTO `Guest` (`id`, `firstName`, `lastName`, `phone`, `email`, `createdAt`) VALUES(null,'Joel','Verastegui','987654323','joel@pichangol.com',CURRENT_TIMESTAMP);
 INSERT INTO `Guest` (`id`, `firstName`, `lastName`, `phone`, `email`, `createdAt`) VALUES(null,'Daniel','Palomino','987654324','palomino@pichangol.com',CURRENT_TIMESTAMP);
 INSERT INTO `Guest` (`id`, `firstName`, `lastName`, `phone`, `email`, `createdAt`) VALUES(null,'Joe','Hermoza','987654325','hermoza@pichangol.com',CURRENT_TIMESTAMP);
+
+
+INSERT INTO `reservation` (`id`, `soccerFieldId`, `reserverId`, `reserverType`, `date`, `start`, `end`, `chargeId`, `createdAt`) VALUES
+(1, 1, 1, 'GUEST', '2019-06-24', 11, 12, 999, '2019-06-24 08:08:11'),
+(2, 1, 2, 'GUEST', '2019-06-23', 14, 15, 888, '2019-06-23 10:17:29'),
+(3, 1, 1, 'GUEST', '2019-06-23', 16, 17, 777, '2019-06-23 08:08:11'),
+(4, 3, 3, 'GUEST', '2019-06-24', 11, 12, 999, '2019-06-24 08:08:11');

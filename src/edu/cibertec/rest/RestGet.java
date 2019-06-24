@@ -149,7 +149,7 @@ public class RestGet {
 			for(SoccerField so:listSocce) {
 				SoccerFieldDTO dto = new SoccerFieldDTO();
 				dto = Util.SoccerFieldJPAtoDTO(so);
-				
+				listReservedDTO = new ArrayList<ReservedDTO>();
 				listReservation = reservService.getReservationsXField(so.getId());
 				for(Reservation rev:listReservation) {
 					

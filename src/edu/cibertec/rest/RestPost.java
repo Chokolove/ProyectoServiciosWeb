@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import edu.cibertec.dto.ReservInsertDTO;
 import edu.cibertec.entity.Account;
 import edu.cibertec.persistence.service.AccountServiceImpl;
 import edu.cibertec.util.Util;
@@ -25,7 +26,25 @@ public class RestPost {
 	AccountServiceImpl accService = new AccountServiceImpl();
 
 	static final Logger log = Logger.getLogger(RestPost.class);
-/*
+
+	//http://localhost:8080/api-rest/post/postReserv/
+	@POST
+	@Path("/postReserv")
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces(MediaType.APPLICATION_JSON)
+	public String postReserv( ReservInsertDTO res) {
+		log.info("entro POST: postReview()");
+		String result = "";
+		
+
+
+		log.info("salio POST: postReview()");
+		return result;
+	}
+
+
+
+	/*
 	//http://localhost:8080/api-rest/post/login/
 	@POST
 	@Path("/login")
@@ -203,8 +222,8 @@ public class RestPost {
 		log.info("salio POST: signUp()");
 		return result;
 	}
-	
-	
+
+
 
 	//http://localhost:8080/api-rest/post/postReview/
 	@POST
@@ -257,7 +276,7 @@ public class RestPost {
 		log.info("salio POST: postReview()");
 		return result;
 	}
-	
+
 	//http://localhost:8080/api-rest/post/updateReview/
 		@POST
 		@Path("/updateReview")
@@ -297,10 +316,10 @@ public class RestPost {
 			} catch (Exception e) {
 				log.fatal("Exception: ", e);
 			}
-			
+
 			JsonElement revJson = null;
 			revJson = new Gson().toJsonTree(Util.reviewJPAtoDTO(revJPA));
-			
+
 			json.add("review", revJson);
 			json.addProperty("message", "");
 			json.addProperty("response", true);
@@ -312,5 +331,5 @@ public class RestPost {
 			log.info("salio POST: updateReview()");
 			return result;
 		}
-*/
+	 */
 }
