@@ -58,6 +58,7 @@ public class RestPost {
 			reservation.setEnd(res.getEnd());
 			reservation.setChargeId(res.getChargeId());
 			reservation.setCreatedAt(res.getCreateDate());
+			reservation.setChargeAmount(res.getChargeAmount());
 			log.info("--Objeto creado--");
 			
 			reservation = resService.registrar(reservation);

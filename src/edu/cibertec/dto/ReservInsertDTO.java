@@ -8,6 +8,7 @@ public class ReservInsertDTO {
 	private int start;
 	private int end;
 	private int chargeId;
+	private double chargeAmount;
 	private String createDate;
 	public int getSoccerFieldId() {
 		return soccerFieldId;
@@ -56,6 +57,12 @@ public class ReservInsertDTO {
 	}
 	public void setCreateDate(String createDate) {
 		this.createDate = createDate;
+	}
+	public double getChargeAmount() {
+		return chargeAmount;
+	}
+	public void setChargeAmount(double chargeAmount) {
+		this.chargeAmount = chargeAmount;
 	}
 	
 }
