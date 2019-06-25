@@ -5,6 +5,8 @@ import java.util.List;
 public class SoccerFieldDTO {
 	private int id;
 	private String description;
+	private double price;
+	
 	private List<ReservedDTO>reservedDTOs;
 	public int getId() {
 		return id;
@@ -24,5 +26,10 @@ public class SoccerFieldDTO {
 	public void setReservedDTOs(List<ReservedDTO> reservedDTOs) {
 		this.reservedDTOs = reservedDTOs;
 	}
-	
+	public double getPrice() {
+		return price;
+	}
+	public void setPrice(double price) {
+		this.price = price;
+	}
 }

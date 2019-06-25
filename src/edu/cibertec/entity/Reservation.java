@@ -23,6 +23,7 @@ public class Reservation {
 	private int start;
 	private int end;
 	private int chargeId;
+	private double chargeAmount;
 	private String createdAt;
 	public int getId() {
 		return id;
@@ -77,6 +78,12 @@ public class Reservation {
 	}
 	public void setCreatedAt(String createdAt) {
 		this.createdAt = createdAt;
+	}
+	public double getChargeAmount() {
+		return chargeAmount;
+	}
+	public void setChargeAmount(double chargeAmount) {
+		this.chargeAmount = chargeAmount;
 	}
 	
 }

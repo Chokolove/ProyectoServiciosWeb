@@ -104,6 +104,7 @@ public class Util {
 		
 		dto.setId(soc.getId());
 		dto.setDescription(soc.getDescription());
+		dto.setPrice(soc.getPrice());
 		
 		log.info("ID: "+soc.getId());
 		log.info("DES:"+soc.getDescription());
