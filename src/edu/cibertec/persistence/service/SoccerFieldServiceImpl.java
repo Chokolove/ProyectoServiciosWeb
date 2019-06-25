@@ -20,8 +20,16 @@ public class SoccerFieldServiceImpl implements ISoccerField{
 
 	@Override
 	public List<SoccerField> getSoccerFields() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("Se ingreso a getSoccerFields()");
+		List<SoccerField>soccList= null;
+
+		soccerJPA.createEM();
+		soccList= soccerJPA.getAll();
+		soccerJPA.releaseEM();
+		
+		log.info("Saliendo de getSoccerFields()");
+		
+		return soccList;
 	}
 
 	@Override

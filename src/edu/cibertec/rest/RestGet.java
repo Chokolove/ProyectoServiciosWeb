@@ -157,6 +157,8 @@ public class RestGet {
 					
 					
 					if(localDate1.equals(localDate2) && so.getId()==rev.getSoccerField().getId()) {
+						log.info("FECHA1: "+localDate1);
+						log.info("FECHA2: "+localDate2);
 						log.info("FECHA iguales");
 						listReservedDTO.add(Util.ReservedJPAtoDTO(rev));
 					}else {
