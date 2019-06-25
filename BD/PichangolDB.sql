@@ -132,6 +132,7 @@ reserverType varchar(255) not null,
 `start` int not null,
 `end` int not null,
 chargeId int not null,
+chargeAmount decimal(6,2) not null,
 createdAt datetime null,
 PRIMARY KEY (id),
 FOREIGN KEY (soccerFieldId) REFERENCES SoccerField(id)
@@ -250,8 +251,8 @@ INSERT INTO `Guest` (`id`, `firstName`, `lastName`, `phone`, `email`, `createdAt
 INSERT INTO `Guest` (`id`, `firstName`, `lastName`, `phone`, `email`, `createdAt`) VALUES(null,'Joe','Hermoza','987654325','hermoza@pichangol.com',CURRENT_TIMESTAMP);
 
 
-INSERT INTO `reservation` (`id`, `soccerFieldId`, `reserverId`, `reserverType`, `date`, `start`, `end`, `chargeId`, `createdAt`) VALUES
-(1, 1, 1, 'GUEST', '2019-06-24', 11, 12, 999, '2019-06-24 08:08:11'),
-(2, 1, 2, 'GUEST', '2019-06-23', 14, 15, 888, '2019-06-23 10:17:29'),
-(3, 1, 1, 'GUEST', '2019-06-23', 16, 17, 777, '2019-06-23 08:08:11'),
-(4, 3, 3, 'GUEST', '2019-06-24', 11, 12, 999, '2019-06-24 08:08:11');
+INSERT INTO `reservation` (`id`, `soccerFieldId`, `reserverId`, `reserverType`, `date`, `start`, `end`, `chargeId`, `chargeAmount`, `createdAt`) VALUES
+(1, 1, 1, 'GUEST', '2019-06-24', 11, 12, 999,80.00, '2019-06-24 08:08:11'),
+(2, 1, 2, 'GUEST', '2019-06-23', 14, 15, 888,80.00, '2019-06-23 10:17:29'),
+(3, 1, 1, 'GUEST', '2019-06-23', 16, 18, 777,160.00, '2019-06-23 08:08:11'),
+(4, 3, 3, 'GUEST', '2019-06-24', 11, 13, 999,160.00, '2019-06-24 08:08:11');
