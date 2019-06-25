@@ -51,7 +51,6 @@ public class AccountServiceImpl implements IAccountService {
 	public Account registrar(Account account) throws Exception {
 		
 		log.info("Se ingreso a registrar()");
-		Account acc = new Account();
 
 		try {
 
@@ -59,16 +58,14 @@ public class AccountServiceImpl implements IAccountService {
 			accDAO.beginTransaction();
 			accDAO.registrar(account);
 			accDAO.flush();
-			
 			accDAO.endTransaction();
 
 		} catch (Exception e) {
 			log.error("Algo salio mal al registrar Account");
 			accDAO.rollbackTransaction();
-			e.printStackTrace();
+			log.fatal("Exception: ", e);
 		}
 		log.info("Cuenta Creada");
-		log.info("acc"+acc.getId());
 		return account;
 	}
 

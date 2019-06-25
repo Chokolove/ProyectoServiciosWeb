@@ -39,8 +39,22 @@ public class ReservationServiceImpl implements IReservation{
 
 	@Override
 	public Reservation registrar(Reservation Reservation) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("Se ingreso a registrar()");
+		
+		try {
+			reservationJPA.createEM();
+			reservationJPA.beginTransaction();
+			reservationJPA.registrar(Reservation);
+			reservationJPA.flush();
+			reservationJPA.endTransaction();	
+		} catch (Exception e){
+			log.error("Algo salio mal al registrar Reservation");
+			reservationJPA.rollbackTransaction();
+			log.fatal("Exception: ", e);
+		}
+		log.info("Cuenta Creada");
+		log.info("Se salio de registrar()");
+		return Reservation;
 	}
 
 	@Override

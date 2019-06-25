@@ -17,14 +17,21 @@ import com.google.gson.JsonObject;
 
 import edu.cibertec.dto.ReservInsertDTO;
 import edu.cibertec.entity.Account;
+import edu.cibertec.entity.Customer;
+import edu.cibertec.entity.Guest;
+import edu.cibertec.entity.Reservation;
+import edu.cibertec.entity.SoccerField;
 import edu.cibertec.persistence.service.AccountServiceImpl;
+import edu.cibertec.persistence.service.ReservationServiceImpl;
+import edu.cibertec.persistence.service.SoccerFieldServiceImpl;
 import edu.cibertec.util.Util;
 
 @Path("/post")
 public class RestPost {
+	
 
-	AccountServiceImpl accService = new AccountServiceImpl();
-
+	SoccerFieldServiceImpl socService = new SoccerFieldServiceImpl();
+	ReservationServiceImpl resService = new ReservationServiceImpl();
 	static final Logger log = Logger.getLogger(RestPost.class);
 
 	//http://localhost:8080/api-rest/post/postReserv/
@@ -33,12 +40,36 @@ public class RestPost {
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces(MediaType.APPLICATION_JSON)
 	public String postReserv( ReservInsertDTO res) {
-		log.info("entro POST: postReview()");
+		log.info("entro POST: postReserv()");
 		String result = "";
+		List<SoccerField> listSoccerField = new ArrayList<SoccerField>();
+		Reservation reservation = new Reservation();
+		try {
+			listSoccerField = socService.getSoccerFields();
+			for (SoccerField sf:listSoccerField) {
+				if(sf.getId()==res.getSoccerFieldId()) {
+					reservation.setSoccerField(sf);
+				}
+			}
+			reservation.setReserverId(res.getReserverId());
+			reservation.setReserverType(res.getReserverType());
+			reservation.setDate(res.getDay());
+			reservation.setStart(res.getStart());
+			reservation.setEnd(res.getEnd());
+			reservation.setChargeId(res.getChargeId());
+			reservation.setCreatedAt(res.getCreateDate());
+			log.info("--Objeto creado--");
+			
+			reservation = resService.registrar(reservation);
+			log.info("ID: "+reservation.getId());
+			result ="Registro Reservation completo";
+			
+		} catch (Exception e) {
+			log.fatal("Exception: ", e);
+		}
 		
 
-
-		log.info("salio POST: postReview()");
+		log.info("salio POST: postReserv()");
 		return result;
 	}
 

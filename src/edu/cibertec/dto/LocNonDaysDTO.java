@@ -2,7 +2,7 @@ package edu.cibertec.dto;
 
 public class LocNonDaysDTO {
 	private String date;
-	private String reasion;
+	private String reason;
 	public String getDate() {
 		return date;
 	}
@@ -10,10 +10,10 @@ public class LocNonDaysDTO {
 		this.date = date;
 	}
 	public String getReasion() {
-		return reasion;
+		return reason;
 	}
 	public void setReasion(String reasion) {
-		this.reasion = reasion;
+		this.reason = reasion;
 	}
 	
 }
