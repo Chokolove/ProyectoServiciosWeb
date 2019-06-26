@@ -128,6 +128,7 @@ public class RestGet {
 			localAdcDto.setId(loc.getId());
 			localAdcDto.setNombre(loc.getName());
 			localAdcDto.setAddress(loc.getAddress());
+			localAdcDto.setDescription(loc.getDescription());
 			localAdcDto.setLatitude(""+loc.getLatitude());
 			localAdcDto.setLongitude(""+loc.getLongitude());
 

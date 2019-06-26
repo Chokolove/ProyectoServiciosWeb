@@ -6,6 +6,7 @@ public class LocalAdvDTO {
 	
 	private int id;
 	private String nombre;
+	private String description;
 	private String address;
 	private String latitude;
 	private String longitude;
@@ -59,6 +60,12 @@ public class LocalAdvDTO {
 	}
 	public void setListSocField(List<SoccerFieldDTO> listSocField) {
 		this.listSocField = listSocField;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	
 
