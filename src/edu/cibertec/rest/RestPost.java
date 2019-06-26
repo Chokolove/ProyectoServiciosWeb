@@ -15,6 +15,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import edu.cibertec.dto.CustomerDTO;
+import edu.cibertec.dto.LoginDTO;
 import edu.cibertec.dto.ReservInsertDTO;
 import edu.cibertec.entity.Account;
 import edu.cibertec.entity.Customer;
@@ -22,16 +24,18 @@ import edu.cibertec.entity.Guest;
 import edu.cibertec.entity.Reservation;
 import edu.cibertec.entity.SoccerField;
 import edu.cibertec.persistence.service.AccountServiceImpl;
+import edu.cibertec.persistence.service.CustomerServiceImpl;
 import edu.cibertec.persistence.service.ReservationServiceImpl;
 import edu.cibertec.persistence.service.SoccerFieldServiceImpl;
 import edu.cibertec.util.Util;
 
 @Path("/post")
 public class RestPost {
-	
+
 
 	SoccerFieldServiceImpl socService = new SoccerFieldServiceImpl();
 	ReservationServiceImpl resService = new ReservationServiceImpl();
+	CustomerServiceImpl cusService = new CustomerServiceImpl();
 	static final Logger log = Logger.getLogger(RestPost.class);
 
 	//http://localhost:8080/api-rest/post/postReserv/
@@ -60,15 +64,15 @@ public class RestPost {
 			reservation.setCreatedAt(res.getCreateDate());
 			reservation.setChargeAmount(res.getChargeAmount());
 			log.info("--Objeto creado--");
-			
+
 			reservation = resService.registrar(reservation);
 			log.info("ID: "+reservation.getId());
 			result ="Registro Reservation completo";
-			
+
 		} catch (Exception e) {
 			log.fatal("Exception: ", e);
 		}
-		
+
 
 		log.info("salio POST: postReserv()");
 		return result;
@@ -76,7 +80,7 @@ public class RestPost {
 
 
 
-	/*
+
 	//http://localhost:8080/api-rest/post/login/
 	@POST
 	@Path("/login")
@@ -84,48 +88,51 @@ public class RestPost {
 	@Produces(MediaType.APPLICATION_JSON)
 	public String validarLogin( LoginDTO login) {
 		log.info("Entrando a POST: validarLogin()");
-		List<Account> listaAccJPA = null;
-		String result = "";
-		ProfileDTO dto = new ProfileDTO();
-		Profile jpa = new Profile();
+		String result="";
+		List<Customer> lstCustomer = new ArrayList<Customer>();
 		JsonObject json = new JsonObject();
-		JsonElement profileDTO = null;
+		JsonElement jsonCust = null;
+		CustomerDTO cusDTO = new CustomerDTO();
 		try {
-			listaAccJPA = accService.getAccounts();
-			for(Account acc:listaAccJPA) {
-				if(login.getEmail().equals(acc.getEmail()) && login.getPassword().equals(acc.getPassword())) {
+			lstCustomer=cusService.getCustomers();
+			for(Customer cus:lstCustomer) {
+				if(login.getLogin().indexOf("@")==-1) {
+					log.info("Logica validacion/telf");
+					if(login.getLogin().equals(""+cus.getPhone()) && login.getPass().equals(cus.getAccount().getPassword())) {
+						cusDTO = Util.CustomerJPAtoDTO(cus);
+						jsonCust = new Gson().toJsonTree(cusDTO);
+						json.add("Customer", jsonCust);
+						json.addProperty("response", true);
+						result = json.toString();
+						return result;
+					} 
 
+				}else {
+					log.info("Logica validacion/email");
+					if(login.getLogin().equals(cus.getEmail()) && login.getPass().equals(cus.getAccount().getPassword())) {
+						cusDTO = Util.CustomerJPAtoDTO(cus);
+						jsonCust = new Gson().toJsonTree(cusDTO);
+						json.add("Customer", jsonCust);
+						json.addProperty("response", true);
+						result = json.toString();
+						return result;
+					} 
 
-					jpa = profService.getProfileXAcc(acc.getId());
-					dto = Util.profileJPAtoDTO(jpa);
-
-					profileDTO= new Gson().toJsonTree(dto);
-
-					json.add("profile", profileDTO);
-					json.addProperty("response", true);
-
-					result = json.toString();
-
-					log.info(result);
-					log.info("Saliendo a POST: validarLogin()");
-					return result; 
-				} 
+				}
 			}
+			json.addProperty("Customer", "null");
+			json.addProperty("response", false);
+			result = json.toString();
+			return result;
 		} catch (Exception e) {
-
+			// TODO Auto-generated catch block
 			log.fatal("Exception: ", e);
-			return null;
-
 		}
-		json.addProperty("profile", "");
-		json.addProperty("response", false);
-		result = json.toString();
 
-		log.info("No se encontro registro");
 		log.info("Saliendo a POST: validarLogin()");
 		return result;
 	}
-
+	/*
 	//http://localhost:8080/api-rest/post/validacionEmail/
 	@POST
 	@Path("/validacionEmail")

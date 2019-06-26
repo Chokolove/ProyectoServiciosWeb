@@ -3,6 +3,7 @@ package edu.cibertec.util;
 import org.apache.log4j.Logger;
 
 import edu.cibertec.dto.AccountDTO;
+import edu.cibertec.dto.CustomerDTO;
 import edu.cibertec.dto.LocNonDaysDTO;
 import edu.cibertec.dto.LocWorDayDTO;
 import edu.cibertec.dto.LocalDTO;
@@ -10,6 +11,7 @@ import edu.cibertec.dto.PartnerDTO;
 import edu.cibertec.dto.ReservedDTO;
 import edu.cibertec.dto.SoccerFieldDTO;
 import edu.cibertec.entity.Account;
+import edu.cibertec.entity.Customer;
 import edu.cibertec.entity.Local;
 import edu.cibertec.entity.LocalNonWorkingDay;
 import edu.cibertec.entity.LocalWorkingWeekDay;
@@ -122,6 +124,25 @@ public class Util {
 		log.info(""+res.getDate());
 		log.info(""+res.getStart());
 		log.info(""+res.getEnd());
+		
+		return dto;
+	}
+	public static CustomerDTO CustomerJPAtoDTO(Customer cus) {
+		CustomerDTO dto = new CustomerDTO();
+		
+		dto.setId(cus.getId());
+		dto.setAccount(Util.accJPAtoDTO(cus.getAccount()));
+		dto.setFirstName(cus.getFirstName());
+		dto.setLastName(cus.getLastName());
+		dto.setBirthday(cus.getBirthday());
+		dto.setPhone(cus.getPhone());
+		dto.setEmail(cus.getEmail());
+		
+		log.info(""+dto.getId());
+		log.info(""+dto.getFirstName());
+		log.info(""+dto.getPhone());
+		log.info(""+dto.getEmail());
+		
 		
 		return dto;
 	}
