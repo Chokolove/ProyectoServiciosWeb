@@ -269,6 +269,10 @@ INSERT INTO `Reservation` (`id`, `soccerFieldId`, `reserverId`, `reserverType`, 
 (3, 1, 1, 'GUEST', '2019-06-23', 16, 18, 777,160.00, '2019-06-23 08:08:11'),
 (4, 3, 3, 'GUEST', '2019-06-24', 11, 13, 999,160.00, '2019-06-24 08:08:11');
 
+INSERT INTO `customer` (`id`, `accountId`, `firstName`, `lastName`, `birthday`, `phone`, `email`, `createdAt`) VALUES
+(1, 1, 'Pepito', 'Suarez', '1997-03-20', '123456789', 'asd@asd.com', '2019-06-26 00:00:00'),
+(2, 2, 'Juanchito', 'Quel', '1997-03-20', '987654321', 'qwe@qwe.com', '2019-06-26 00:00:00');
+
 INSERT INTO `review` (`id`, `customerId`, `localId`, `stars`, `commentary`) VALUES
 (1, 1, 1, 4, 'Tengo sueño'),
 (2, 2, 1, 4, 'Tengo sueño x2'),
