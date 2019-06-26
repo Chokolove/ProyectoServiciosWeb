@@ -176,7 +176,7 @@ public class RestGet {
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.fatal("Exception: ", e);
 		}
 
 
@@ -185,6 +185,29 @@ public class RestGet {
 
 
 	}
+	//http://localhost:8080/api-rest/get/getResenasxCustomer/1
+		@GET
+		@Path("/getResenasxCustomer/{p_idCust}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public List<ReservedDTO> getResenasxCustomer(@PathParam("p_idCust") int id) {
+			log.info("Entro a getResenasxCustomer()");
+			List<Reservation> lstReseJPA = new ArrayList<Reservation>();
+			List<ReservedDTO> lstRese = new ArrayList<ReservedDTO>();
+			
+			try {
+				lstReseJPA = reservService.getReservationsXCustomer(id);
+				for(Reservation re:lstReseJPA) {
+					lstRese.add(Util.ReservedJPAtoDTO(re));
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				log.fatal("Exception: ", e);
+			}
+			
+			
+			log.info("Saliendo de getResenasxCustomer()");
+			return lstRese;
+		}
 
 	/*
 	//http://localhost:8080/api-rest/get/obtenerdatoslocal/M

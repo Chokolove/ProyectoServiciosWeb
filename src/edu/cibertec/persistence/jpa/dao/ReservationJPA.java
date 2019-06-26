@@ -21,6 +21,11 @@ public class ReservationJPA extends GenericoJPA{
 		query.setParameter(1, id);
 		return query.getResultList();
 	}
+	public List<Reservation> getAllxCustomer(int id) throws Exception {
+		TypedQuery<Reservation> query = em.createQuery("FROM Reservation where reserverId = ?1",Reservation.class);
+		query.setParameter(1, id);
+		return query.getResultList();
+	}
 	public void registrar(Reservation ReservationJPA) throws Exception{
 		em.persist(ReservationJPA);
 	}

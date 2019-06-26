@@ -69,4 +69,18 @@ public class ReservationServiceImpl implements IReservation{
 		
 	}
 
+	@Override
+	public List<Reservation> getReservationsXCustomer(int id) throws Exception {
+		log.info("Se ingreso a getReservationsXCustomer()");
+		List<Reservation>resList= null;
+
+		reservationJPA.createEM();
+		resList= reservationJPA.getAllxCustomer(id);
+		reservationJPA.releaseEM();
+		
+		log.info("Saliendo de getReservationsXCustomer()");
+		
+		return resList;
+	}
+
 }
