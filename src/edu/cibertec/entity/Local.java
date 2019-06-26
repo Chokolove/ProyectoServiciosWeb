@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="local")
+@Table(name="Local")
 public class Local {
 	
 	@Id

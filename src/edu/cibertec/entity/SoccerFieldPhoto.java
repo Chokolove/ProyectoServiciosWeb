@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="soccerFieldPhoto")
+@Table(name="SoccerFieldPhoto")
 public class SoccerFieldPhoto {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

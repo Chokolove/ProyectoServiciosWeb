@@ -9,7 +9,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="localNonWorkingDay")
+@Table(name="LocalNonWorkingDay")
 public class LocalNonWorkingDay {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
