@@ -9,6 +9,7 @@ import edu.cibertec.dto.LocWorDayDTO;
 import edu.cibertec.dto.LocalDTO;
 import edu.cibertec.dto.PartnerDTO;
 import edu.cibertec.dto.ReservedDTO;
+import edu.cibertec.dto.ReviewDTO;
 import edu.cibertec.dto.SoccerFieldDTO;
 import edu.cibertec.entity.Account;
 import edu.cibertec.entity.Customer;
@@ -17,6 +18,7 @@ import edu.cibertec.entity.LocalNonWorkingDay;
 import edu.cibertec.entity.LocalWorkingWeekDay;
 import edu.cibertec.entity.Partner;
 import edu.cibertec.entity.Reservation;
+import edu.cibertec.entity.Review;
 import edu.cibertec.entity.SoccerField;
 
 public class Util {
@@ -143,6 +145,23 @@ public class Util {
 		log.info(""+dto.getPhone());
 		log.info(""+dto.getEmail());
 		
+		
+		return dto;
+	}
+	public static ReviewDTO reviewJPAtoDTO (Review rev) {
+		ReviewDTO dto = new ReviewDTO();
+		
+		dto.setId(rev.getId());
+		dto.setCustomer(Util.CustomerJPAtoDTO(rev.getCustomer()));
+		dto.setLocal(Util.localJPAtoDTO(rev.getLocal()));
+		dto.setStars(rev.getStars());
+		dto.setCommentary(rev.getCommentary());
+		
+		log.info(""+dto.getId());
+		log.info(""+dto.getCustomer().getFirstName()+ " "+dto.getCustomer().getLastName());
+		log.info(""+dto.getLocal().getName());
+		log.info(""+dto.getCommentary());
+		log.info(""+dto.getStars());
 		
 		return dto;
 	}

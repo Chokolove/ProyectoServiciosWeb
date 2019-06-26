@@ -1,11 +1,16 @@
 package edu.cibertec.entity;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -23,6 +28,9 @@ public class Customer {
 	private int phone;
 	private String email;
 	private String createdAt;
+	@OneToMany(mappedBy="customer", cascade= CascadeType.PERSIST)
+	private Collection<Review>reviews = new ArrayList<Review>();
+	
 	public int getId() {
 		return id;
 	}

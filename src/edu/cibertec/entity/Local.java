@@ -40,6 +40,8 @@ public class Local {
 	private Collection<LocalNonWorkingDay>localNonWorkingDays = new ArrayList<LocalNonWorkingDay>();
 	@OneToMany(mappedBy="local", cascade= CascadeType.PERSIST)
 	private Collection<SoccerField>soccerFields = new ArrayList<SoccerField>();
+	@OneToMany(mappedBy="local", cascade= CascadeType.PERSIST)
+	private Collection<Review>reviews = new ArrayList<Review>();
 	
 	public Collection<LocalWorkingWeekDay> getLocalWorkingWeekDays() {
 		return localWorkingWeekDays;
@@ -118,6 +120,12 @@ public class Local {
 	}
 	public void setDeletedAt(String deletedAt) {
 		this.deletedAt = deletedAt;
+	}
+	public Collection<Review> getReviews() {
+		return reviews;
+	}
+	public void setReviews(Collection<Review> reviews) {
+		this.reviews = reviews;
 	}
 	
 }

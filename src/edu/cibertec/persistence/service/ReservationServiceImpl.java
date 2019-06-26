@@ -8,7 +8,7 @@ import edu.cibertec.entity.Reservation;
 import edu.cibertec.entity.SoccerField;
 import edu.cibertec.persistence.jpa.dao.ReservationJPA;
 
-public class ReservationServiceImpl implements IReservation{
+public class ReservationServiceImpl implements IReservationService{
 	static final Logger log = Logger.getLogger(ReservationServiceImpl.class);
 	ReservationJPA reservationJPA = new ReservationJPA();
 	@Override

@@ -22,12 +22,14 @@ import edu.cibertec.dto.LocWorDayDTO;
 import edu.cibertec.dto.LocalAdvDTO;
 import edu.cibertec.dto.LocalDTO;
 import edu.cibertec.dto.ReservedDTO;
+import edu.cibertec.dto.ReviewDTO;
 import edu.cibertec.dto.SoccerFieldDTO;
 import edu.cibertec.entity.Account;
 import edu.cibertec.entity.Local;
 import edu.cibertec.entity.LocalNonWorkingDay;
 import edu.cibertec.entity.LocalWorkingWeekDay;
 import edu.cibertec.entity.Reservation;
+import edu.cibertec.entity.Review;
 import edu.cibertec.entity.SoccerField;
 import edu.cibertec.persistence.service.AccountServiceImpl;
 import edu.cibertec.persistence.service.IAccountService;
@@ -35,6 +37,7 @@ import edu.cibertec.persistence.service.LocalNonWorkingDayServiceImpl;
 import edu.cibertec.persistence.service.LocalServiceImpl;
 import edu.cibertec.persistence.service.LocalWorkingWeekDayServiceImpl;
 import edu.cibertec.persistence.service.ReservationServiceImpl;
+import edu.cibertec.persistence.service.ResviewServiceImpl;
 import edu.cibertec.persistence.service.SoccerFieldServiceImpl;
 import edu.cibertec.util.Util;
 
@@ -49,6 +52,7 @@ public class RestGet {
 	LocalWorkingWeekDayServiceImpl lwwdService = new LocalWorkingWeekDayServiceImpl();
 	LocalNonWorkingDayServiceImpl  lnwdService = new LocalNonWorkingDayServiceImpl();
 	ReservationServiceImpl reservService = new ReservationServiceImpl();
+	ResviewServiceImpl revService = new ResviewServiceImpl();
 	/*
 	//http://localhost:8080/api-rest/get/obtenerDatosAccount/
 	@GET
@@ -207,6 +211,28 @@ public class RestGet {
 			
 			log.info("Saliendo de getResenasxCustomer()");
 			return lstRese;
+		}
+		
+		//http://localhost:8080/api-rest/get/obetenerResenasLocal/1
+		@GET
+		@Path("/obetenerResenasLocal/{p_id}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public List<ReviewDTO> obetenerRevIdLocal(@PathParam("p_id") int id) {
+			log.info("entro obetenerResenasLocal()");
+			List<ReviewDTO> review = new ArrayList<ReviewDTO>();
+			List<Review> rev = null;
+			try {
+				rev = revService.getReviewsXLocal(id);
+				for(Review revJpa:rev) {
+					review.add(Util.reviewJPAtoDTO(revJpa));
+				}
+				log.info("Finaliza busqueda");
+				return review;
+			} catch (Exception e) {
+				log.fatal("Exception: ", e);
+			}
+			log.info("salio obetenerResenasLocal()");
+			return review;
 		}
 
 	/*

@@ -19,6 +19,7 @@
 		<class>edu.cibertec.entity.Guest</class>
 		<class>edu.cibertec.entity.Customer</class>
 		<class>edu.cibertec.entity.Reservation</class>
+		<class>edu.cibertec.entity.Review</class>
 		
 
 		<properties>

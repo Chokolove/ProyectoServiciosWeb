@@ -4,7 +4,7 @@ import java.util.List;
 
 import edu.cibertec.entity.Reservation;
 
-public interface IReservation {
+public interface IReservationService {
 	public Reservation getReservation(Integer id) throws Exception;
 	public List<Reservation> getReservations()	throws Exception;
 	public List<Reservation> getReservationsXField(int id)	throws Exception;
