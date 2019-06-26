@@ -146,7 +146,7 @@ localId int not null,
 stars int not null,
 commentary varchar(400) not null,
 PRIMARY KEY (id),
-FOREIGN KEY (accountId) REFERENCES Customer(id),
+FOREIGN KEY (customerId) REFERENCES Customer(id),
 FOREIGN KEY (localId) REFERENCES `Local`(id)
 );
 
