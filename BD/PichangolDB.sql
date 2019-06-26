@@ -139,6 +139,18 @@ FOREIGN KEY (soccerFieldId) REFERENCES SoccerField(id)
 );
 
 
+CREATE TABLE IF NOT EXISTS Review(
+id int auto_increment not null,
+customerId int not null,
+localId int not null,
+stars int not null,
+commentary varchar(400) not null,
+PRIMARY KEY (id),
+FOREIGN KEY (accountId) REFERENCES Customer(id),
+FOREIGN KEY (localId) REFERENCES `Local`(id)
+);
+
+
 INSERT INTO `Account` (`id`, `password`, `confirmedAt`, `lockedAt`, `lastLogin`) VALUES (NULL, 'asd', '2019-06-18 19:40:00', NULL, NULL);
 INSERT INTO `Account` (`id`, `password`, `confirmedAt`, `lockedAt`, `lastLogin`) VALUES (NULL, 'zxc', '2019-06-18 19:40:00', NULL, NULL);
 INSERT INTO `Account` (`id`, `password`, `confirmedAt`, `lockedAt`, `lastLogin`) VALUES (NULL, 'Contrasena', '2019-06-18 19:40:00', NULL, NULL);
@@ -256,3 +268,9 @@ INSERT INTO `Reservation` (`id`, `soccerFieldId`, `reserverId`, `reserverType`, 
 (2, 1, 2, 'GUEST', '2019-06-23', 14, 15, 888,80.00, '2019-06-23 10:17:29'),
 (3, 1, 1, 'GUEST', '2019-06-23', 16, 18, 777,160.00, '2019-06-23 08:08:11'),
 (4, 3, 3, 'GUEST', '2019-06-24', 11, 13, 999,160.00, '2019-06-24 08:08:11');
+
+INSERT INTO `review` (`id`, `customerId`, `localId`, `stars`, `commentary`) VALUES
+(1, 1, 1, 4, 'Tengo sueño'),
+(2, 2, 1, 4, 'Tengo sueño x2'),
+(3, 1, 2, 4, 'Tengo sueño alguien ayudeme'),
+(4, 1, 2, 4, 'Tengo sueño quiero dormir');
