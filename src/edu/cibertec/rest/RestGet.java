@@ -21,6 +21,7 @@ import edu.cibertec.dto.LocNonDaysDTO;
 import edu.cibertec.dto.LocWorDayDTO;
 import edu.cibertec.dto.LocalAdvDTO;
 import edu.cibertec.dto.LocalDTO;
+import edu.cibertec.dto.ReservedAdvDTO;
 import edu.cibertec.dto.ReservedDTO;
 import edu.cibertec.dto.ReviewDTO;
 import edu.cibertec.dto.SoccerFieldDTO;
@@ -189,19 +190,19 @@ public class RestGet {
 
 
 	}
-	//http://localhost:8080/api-rest/get/getResenasxCustomer/1
+	//http://localhost:8080/api-rest/get/getReservsxCustomer/1
 		@GET
-		@Path("/getResenasxCustomer/{p_idCust}")
+		@Path("/getReservsxCustomer/{p_idCust}")
 		@Produces(MediaType.APPLICATION_JSON)
-		public List<ReservedDTO> getResenasxCustomer(@PathParam("p_idCust") int id) {
-			log.info("Entro a getResenasxCustomer()");
+		public List<ReservedAdvDTO> getReservsxCustomer(@PathParam("p_idCust") int id) {
+			log.info("Entro a getReservsxCustomer()");
 			List<Reservation> lstReseJPA = new ArrayList<Reservation>();
-			List<ReservedDTO> lstRese = new ArrayList<ReservedDTO>();
+			List<ReservedAdvDTO> lstRese = new ArrayList<ReservedAdvDTO>();
 			
 			try {
 				lstReseJPA = reservService.getReservationsXCustomer(id);
 				for(Reservation re:lstReseJPA) {
-					lstRese.add(Util.ReservedJPAtoDTO(re));
+					lstRese.add(Util.ReservedAdvJPAtoDTO(re));
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -209,15 +210,15 @@ public class RestGet {
 			}
 			
 			
-			log.info("Saliendo de getResenasxCustomer()");
+			log.info("Saliendo de getReservsxCustomer()");
 			return lstRese;
 		}
 		
-		//http://localhost:8080/api-rest/get/obetenerResenasLocal/1
+		//http://localhost:8080/api-rest/get/obetenerReviewLocal/1
 		@GET
-		@Path("/obetenerResenasLocal/{p_id}")
+		@Path("/obetenerReviewLocal/{p_id}")
 		@Produces(MediaType.APPLICATION_JSON)
-		public List<ReviewDTO> obetenerRevIdLocal(@PathParam("p_id") int id) {
+		public List<ReviewDTO> obetenerReviewLocal(@PathParam("p_id") int id) {
 			log.info("entro obetenerResenasLocal()");
 			List<ReviewDTO> review = new ArrayList<ReviewDTO>();
 			List<Review> rev = null;

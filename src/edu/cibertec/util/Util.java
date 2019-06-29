@@ -8,6 +8,7 @@ import edu.cibertec.dto.LocNonDaysDTO;
 import edu.cibertec.dto.LocWorDayDTO;
 import edu.cibertec.dto.LocalDTO;
 import edu.cibertec.dto.PartnerDTO;
+import edu.cibertec.dto.ReservedAdvDTO;
 import edu.cibertec.dto.ReservedDTO;
 import edu.cibertec.dto.ReviewDTO;
 import edu.cibertec.dto.SoccerFieldDTO;
@@ -129,6 +130,26 @@ public class Util {
 		
 		return dto;
 	}
+	
+	public static ReservedAdvDTO ReservedAdvJPAtoDTO (Reservation res) {
+		ReservedAdvDTO dto = new ReservedAdvDTO();
+		
+		dto.setDay(res.getDate());
+		dto.setStart(res.getStart());
+		dto.setEnd(res.getEnd());
+		dto.setSoccerFieldDTO(Util.SoccerFieldJPAtoDTO(res.getSoccerField()));
+		dto.setChargeId(res.getChargeId());
+		dto.setChargeAmount(res.getChargeAmount());
+		dto.setCreatedAt(res.getCreatedAt());
+		
+		log.info(""+res.getId());
+		log.info(""+res.getDate());
+		log.info(""+res.getStart());
+		log.info(""+res.getEnd());
+		
+		return dto;
+	}
+	
 	public static CustomerDTO CustomerJPAtoDTO(Customer cus) {
 		CustomerDTO dto = new CustomerDTO();
 		
@@ -153,13 +174,11 @@ public class Util {
 		
 		dto.setId(rev.getId());
 		dto.setCustomer(Util.CustomerJPAtoDTO(rev.getCustomer()));
-		dto.setLocal(Util.localJPAtoDTO(rev.getLocal()));
 		dto.setStars(rev.getStars());
 		dto.setCommentary(rev.getCommentary());
 		
 		log.info(""+dto.getId());
 		log.info(""+dto.getCustomer().getFirstName()+ " "+dto.getCustomer().getLastName());
-		log.info(""+dto.getLocal().getName());
 		log.info(""+dto.getCommentary());
 		log.info(""+dto.getStars());
 		

@@ -10,7 +10,6 @@ public class ReviewDTO {
 	
 	private int id;
 	private CustomerDTO customer;
-	private LocalDTO local;
 	private String stars;
 	private String commentary;
 	public int getId() {
@@ -24,12 +23,6 @@ public class ReviewDTO {
 	}
 	public void setCustomer(CustomerDTO customer) {
 		this.customer = customer;
-	}
-	public LocalDTO getLocal() {
-		return local;
-	}
-	public void setLocal(LocalDTO local) {
-		this.local = local;
 	}
 	public String getStars() {
 		return stars;
