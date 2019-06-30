@@ -220,6 +220,11 @@ public class RestPost {
 			account = accService.registrar(account);
 		} catch (Exception e) {
 			log.fatal("Exception: ", e);
+			json.addProperty("message", "Algo salio mal al registrar Account...");
+			json.addProperty("response", false);
+			result = json.toString();
+			log.info("salio POST: postReserv()");
+			return result;
 		}
 		log.info("---Finaliza insercion de Account---");
 
@@ -245,6 +250,11 @@ public class RestPost {
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			log.fatal("Exception: ", e);
+			json.addProperty("message", "Algo salio mal al registrar Customer...");
+			json.addProperty("response", false);
+			result = json.toString();
+			log.info("salio POST: postReserv()");
+			return result;
 		}
 
 		log.info("---Finaliza insercion de Profile---");
