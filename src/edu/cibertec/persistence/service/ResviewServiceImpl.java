@@ -19,9 +19,9 @@ public class ResviewServiceImpl implements IReviewService{
 		reviewJPA.createEM();
 		rev= reviewJPA.get(id);
 		reviewJPA.releaseEM();
-		
+
 		log.info("Saliendo de getReview()");
-		
+
 		return rev;
 	}
 
@@ -33,9 +33,9 @@ public class ResviewServiceImpl implements IReviewService{
 		reviewJPA.createEM();
 		revs= reviewJPA.getAll();
 		reviewJPA.releaseEM();
-		
+
 		log.info("Saliendo de getReviews()");
-		
+
 		return revs;
 	}
 
@@ -47,16 +47,30 @@ public class ResviewServiceImpl implements IReviewService{
 		reviewJPA.createEM();
 		revs= reviewJPA.getAllxField(id);
 		reviewJPA.releaseEM();
-		
+
 		log.info("Saliendo de getReviewsXLocal()");
-		
+
 		return revs;
 	}
 
 	@Override
 	public Review registrar(Review Review) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("Se ingreso a registrar()");
+
+		try {
+			reviewJPA.createEM();
+			reviewJPA.beginTransaction();
+			reviewJPA.registrar(Review);
+			reviewJPA.flush();
+			reviewJPA.endTransaction();	
+		} catch (Exception e){
+			log.error("Algo salio mal al registrar Review");
+			reviewJPA.rollbackTransaction();
+			log.fatal("Exception: ", e);
+		}
+		log.info("Review Creada");
+		log.info("Se salio de registrar()");
+		return Review;
 	}
 
 	@Override
@@ -68,7 +82,7 @@ public class ResviewServiceImpl implements IReviewService{
 	@Override
 	public void eliminar(Integer id) throws Exception {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

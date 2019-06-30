@@ -18,14 +18,19 @@ import com.google.gson.JsonObject;
 import edu.cibertec.dto.CustomerDTO;
 import edu.cibertec.dto.LoginDTO;
 import edu.cibertec.dto.ReservInsertDTO;
+import edu.cibertec.dto.ReviewInsertDTO;
 import edu.cibertec.entity.Account;
 import edu.cibertec.entity.Customer;
 import edu.cibertec.entity.Guest;
+import edu.cibertec.entity.Local;
 import edu.cibertec.entity.Reservation;
+import edu.cibertec.entity.Review;
 import edu.cibertec.entity.SoccerField;
 import edu.cibertec.persistence.service.AccountServiceImpl;
 import edu.cibertec.persistence.service.CustomerServiceImpl;
+import edu.cibertec.persistence.service.LocalServiceImpl;
 import edu.cibertec.persistence.service.ReservationServiceImpl;
+import edu.cibertec.persistence.service.ResviewServiceImpl;
 import edu.cibertec.persistence.service.SoccerFieldServiceImpl;
 import edu.cibertec.util.Util;
 
@@ -36,6 +41,9 @@ public class RestPost {
 	SoccerFieldServiceImpl socService = new SoccerFieldServiceImpl();
 	ReservationServiceImpl resService = new ReservationServiceImpl();
 	CustomerServiceImpl cusService = new CustomerServiceImpl();
+	ResviewServiceImpl revService = new ResviewServiceImpl();
+	LocalServiceImpl locService = new LocalServiceImpl();
+
 	static final Logger log = Logger.getLogger(RestPost.class);
 
 	//http://localhost:8080/api-rest/post/postReserv/
@@ -46,6 +54,7 @@ public class RestPost {
 	public String postReserv( ReservInsertDTO res) {
 		log.info("entro POST: postReserv()");
 		String result = "";
+		JsonObject json = new JsonObject();
 		List<SoccerField> listSoccerField = new ArrayList<SoccerField>();
 		Reservation reservation = new Reservation();
 		try {
@@ -67,15 +76,23 @@ public class RestPost {
 
 			reservation = resService.registrar(reservation);
 			log.info("ID: "+reservation.getId());
-			result ="Registro Reservation completo";
+
+			json.addProperty("message", "");
+			json.addProperty("response", true);
+			log.info("Registro Reservation completo");
+			result = json.toString();
+			log.info("salio POST: postReserv()");
+			return result;
 
 		} catch (Exception e) {
 			log.fatal("Exception: ", e);
+			json.addProperty("message", "Algo salio mal...");
+			json.addProperty("response", false);
+			result = json.toString();
+			log.info("salio POST: postReserv()");
+			return result;
 		}
 
-
-		log.info("salio POST: postReserv()");
-		return result;
 	}
 
 
@@ -132,7 +149,7 @@ public class RestPost {
 		log.info("Saliendo a POST: validarLogin()");
 		return result;
 	}
-	
+
 	//http://localhost:8080/api-rest/post/validacionCustomer/
 	@POST
 	@Path("/validacionCustomer")
@@ -172,7 +189,82 @@ public class RestPost {
 		log.info("---Finaliza validacion de Customer---");
 		return result;
 	}
-/*
+
+	//http://localhost:8080/api-rest/post/postReview/
+	@POST
+	@Path("/postReview")
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces(MediaType.APPLICATION_JSON)
+	public String postReview( ReviewInsertDTO rev) {
+		log.info("entro POST: postReview()");
+
+		JsonObject json = new JsonObject();
+		String result = "";
+		Review revInsert = new Review();
+		List<Review> listReviewXLocal = new ArrayList<Review>();
+		List<Local>locals = new ArrayList<Local>();
+		List<Customer>customers = new ArrayList<Customer>();
+		try {
+			listReviewXLocal = revService.getReviewsXLocal(rev.getLocalId());
+			locals = locService.getLocals();
+			customers = cusService.getCustomers();
+			for(Review r:listReviewXLocal) {
+				if(rev.getLocalId()==r.getLocal().getId() && rev.getCustomerId()==r.getCustomer().getId()) {
+					json.addProperty("message", "Ya existe registro de Comentario");
+					json.addProperty("response", false);
+					result = json.toString();
+					log.info("Ya existe Comentario para este Local");
+					log.info("salio POST: postReview()");
+					return result;
+
+				}
+			}
+			for(Local l:locals) {
+				if(rev.getLocalId()==l.getId()) {
+					revInsert.setLocal(l);
+					break;
+				} 
+			}
+			if(revInsert.getLocal().equals(null)) {
+				//Solo para validar local
+			}
+			for(Customer c: customers) {
+				if(rev.getCustomerId()==c.getId()) {
+					revInsert.setCustomer(c);
+					break;
+				}
+			}if(revInsert.getCustomer().equals(null)) {
+				//solo para validar Customer
+			}
+
+			revInsert.setCommentary(rev.getCommentary());
+			revInsert.setStars(rev.getStars());
+			log.info("Objeto creado");
+			log.info("Insertando Review..");
+			revInsert = revService.registrar(revInsert);
+			log.info("ID Review: "+revInsert.getId());
+
+			json.addProperty("message", "");
+			json.addProperty("response", true);
+			log.info("Registro Review completo");
+			result = json.toString();
+			log.info("salio POST: postReview()");
+			return result;
+
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			log.fatal("Exception: ", e);
+			json.addProperty("message", "Algo salio mal...");
+			json.addProperty("response", false);
+			result = json.toString();
+			log.info("salio POST: postReview()");
+			return result;
+		}
+
+
+	}
+	/*
 	//http://localhost:8080/api-rest/post/signUp/
 	@POST
 	@Path("/signUp")
@@ -264,57 +356,7 @@ public class RestPost {
 
 
 
-	//http://localhost:8080/api-rest/post/postReview/
-	@POST
-	@Path("/postReview")
-	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	@Produces(MediaType.APPLICATION_JSON)
-	public String postReview( ReviewInsert rev) {
-		log.info("entro POST: postReview()");
 
-		JsonObject json = new JsonObject();
-		String result = "";
-		Review revJPA = new Review();
-
-		List<Account> listAcc = null;
-		List<Local> listLoc = null;
-
-		try {
-			listAcc = accService.getAccounts();
-			listLoc = locService.getLocals();
-
-			for(Account acc:listAcc) {
-				if(rev.getAccount_id()==acc.getId()) {
-					revJPA.setAccount(acc);
-				}
-			}
-
-			for(Local loc:listLoc) {
-				if(rev.getLocal_id()==loc.getId()) {
-					revJPA.setLocal(loc);
-				}
-			}
-
-			revJPA.setStars(rev.getStars());
-			revJPA.setCommentary(rev.getCommentary());
-
-			revService.registrar(revJPA);
-
-		} catch (Exception e) {
-			log.fatal("Exception: ", e);
-		}
-
-
-		json.addProperty("message", "");
-		json.addProperty("response", true);
-
-		result = json.toString();
-
-
-
-		log.info("salio POST: postReview()");
-		return result;
-	}
 
 	//http://localhost:8080/api-rest/post/updateReview/
 		@POST
