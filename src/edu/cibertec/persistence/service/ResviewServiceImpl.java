@@ -75,8 +75,22 @@ public class ResviewServiceImpl implements IReviewService{
 
 	@Override
 	public Review actualizar(Review Review) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		log.info("Se ingreso a registrar()");
+
+		try {
+			reviewJPA.createEM();
+			reviewJPA.beginTransaction();
+			reviewJPA.actualizar(Review);;
+			reviewJPA.flush();
+			reviewJPA.endTransaction();	
+		} catch (Exception e){
+			log.error("Algo salio mal al registrar Review");
+			reviewJPA.rollbackTransaction();
+			log.fatal("Exception: ", e);
+		}
+		log.info("Review Creada");
+		log.info("Se salio de registrar()");
+		return Review;
 	}
 
 	@Override

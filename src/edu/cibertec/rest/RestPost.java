@@ -210,10 +210,36 @@ public class RestPost {
 			customers = cusService.getCustomers();
 			for(Review r:listReviewXLocal) {
 				if(rev.getLocalId()==r.getLocal().getId() && rev.getCustomerId()==r.getCustomer().getId()) {
-					json.addProperty("message", "Ya existe registro de Comentario");
-					json.addProperty("response", false);
+					revInsert.setId(r.getId());
+					for(Local l:locals) {
+						if(rev.getLocalId()==l.getId()) {
+							revInsert.setLocal(l);
+							break;
+						} 
+					}
+					if(revInsert.getLocal().equals(null)) {
+						//Solo para validar local
+					}
+					for(Customer c: customers) {
+						if(rev.getCustomerId()==c.getId()) {
+							revInsert.setCustomer(c);
+							break;
+						}
+					}if(revInsert.getCustomer().equals(null)) {
+						//solo para validar Customer
+					}
+					revInsert.setCommentary(rev.getCommentary());
+					revInsert.setStars(rev.getStars());
+					log.info("Objeto creado");
+					log.info("Actualizando Review..");
+					revInsert = revService.actualizar(revInsert);
+					log.info("ID Review: "+revInsert.getId());
+					
+					
+					json.addProperty("message", "Review actualizado");
+					json.addProperty("response", true);
 					result = json.toString();
-					log.info("Ya existe Comentario para este Local");
+					log.info("Review actualizado");
 					log.info("salio POST: postReview()");
 					return result;
 
@@ -241,6 +267,7 @@ public class RestPost {
 			revInsert.setStars(rev.getStars());
 			log.info("Objeto creado");
 			log.info("Insertando Review..");
+
 			revInsert = revService.registrar(revInsert);
 			log.info("ID Review: "+revInsert.getId());
 
