@@ -1,6 +1,10 @@
 package edu.cibertec.rest;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
@@ -15,6 +19,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import edu.cibertec.dto.CustomerAdvDTO;
 import edu.cibertec.dto.CustomerDTO;
 import edu.cibertec.dto.LoginDTO;
 import edu.cibertec.dto.ReservInsertDTO;
@@ -37,7 +42,7 @@ import edu.cibertec.util.Util;
 @Path("/post")
 public class RestPost {
 
-
+	AccountServiceImpl accService = new AccountServiceImpl();
 	SoccerFieldServiceImpl socService = new SoccerFieldServiceImpl();
 	ReservationServiceImpl resService = new ReservationServiceImpl();
 	CustomerServiceImpl cusService = new CustomerServiceImpl();
@@ -190,6 +195,78 @@ public class RestPost {
 		return result;
 	}
 
+	//http://localhost:8080/api-rest/post/signUp/
+	@POST
+	@Path("/signUp")
+	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
+	@Produces(MediaType.APPLICATION_JSON)
+	public String signUp( CustomerAdvDTO cus) {
+		LocalDateTime now = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        String formatDateTime = now.format(formatter);
+		
+		log.info("entro POST: signUp()");
+
+		JsonObject json = new JsonObject();
+		String result = "";
+
+		log.info("---Empieza insercion de Account---");
+
+		Account account = new Account();
+		account.setPassword(cus.getPass());
+		account.setConfirmedAt(formatDateTime);
+
+		try {
+			account = accService.registrar(account);
+		} catch (Exception e) {
+			log.fatal("Exception: ", e);
+		}
+		log.info("---Finaliza insercion de Account---");
+
+		log.info("---Empieza insercion de Profile---");
+
+		Customer customer = new Customer();
+
+		customer.setAccount(account);
+		customer.setBirthday(cus.getBirthday());
+		
+		
+
+		customer.setCreatedAt(formatDateTime);
+		customer.setEmail(cus.getEmail());
+		customer.setFirstName(cus.getFirstName());
+		customer.setLastName(cus.getLastName());
+		customer.setPhone(cus.getPhone());
+
+
+		try {
+			customer = cusService.registrar(customer);
+			log.info(customer.getId());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			log.fatal("Exception: ", e);
+		}
+
+		log.info("---Finaliza insercion de Profile---");
+
+		log.info("---Empieza creacion de Respuesta---");
+
+		JsonElement cusDTO = null;
+		cusDTO =  new Gson().toJsonTree(Util.CustomerJPAtoDTO(customer));
+
+		json.add("Customer",cusDTO);
+		json.addProperty("message", "");
+		json.addProperty("response", true);
+
+		result = json.toString();
+
+
+		log.info("---Finaliza creacion de Respuesta---");
+
+		log.info("salio POST: signUp()");
+		return result;
+	}
+
 	//http://localhost:8080/api-rest/post/postReview/
 	@POST
 	@Path("/postReview")
@@ -234,8 +311,8 @@ public class RestPost {
 					log.info("Actualizando Review..");
 					revInsert = revService.actualizar(revInsert);
 					log.info("ID Review: "+revInsert.getId());
-					
-					
+
+
 					json.addProperty("message", "Review actualizado");
 					json.addProperty("response", true);
 					result = json.toString();
@@ -292,94 +369,7 @@ public class RestPost {
 
 	}
 	/*
-	//http://localhost:8080/api-rest/post/signUp/
-	@POST
-	@Path("/signUp")
-	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
-	@Produces(MediaType.APPLICATION_JSON)
-	public String signUp( UsuarioDTO usu) {
-		log.info("entro POST: signUp()");
 
-		JsonObject json = new JsonObject();
-		String result = "";
-
-		log.info("---Inicia validacion de Correo---");
-
-		List<Account> listaAccJPA = new ArrayList<Account>();
-		try {
-			listaAccJPA = accService.getAccounts();
-			for(Account acc:listaAccJPA) {
-				if(usu.getEmail().equals(acc.getEmail())) {
-
-					json.addProperty("profile", "");
-					json.addProperty("message", "El email ingresado ya se encuentra registrado");
-					json.addProperty("response", false);
-					log.error("El email ingresado ya se encuentra registrado");
-					result = json.toString();
-					return result;
-				}
-			}
-			log.info("Finaliza busqueda cuentas");
-		} catch (Exception e) {
-			log.fatal("Exception: ", e);
-		}
-		log.info("---Finaliza validacion de Correo---");
-
-		log.info("---Empieza insercion de Account---");
-
-		Account account = new Account();
-		account.setEmail(usu.getEmail());
-		account.setPassword(usu.getPassword());
-		account.setAccType(2);
-		account.setStatus(1);
-
-		try {
-			accService.registrar(account);
-		} catch (Exception e) {
-			log.fatal("Exception: ", e);
-		}
-		log.info("---Finaliza insercion de Account---");
-
-		log.info("---Empieza insercion de Profile---");
-
-		Profile profile = new Profile();
-
-
-
-		profile.setAccount(account);
-		profile.setFullName(usu.getFullName());
-		profile.setPhone1(usu.getPhone1());
-		profile.setPhone2(usu.getPhone2());
-		profile.setPhone3(usu.getPhone3());
-		profile.setDni(usu.getDni());
-
-		try {
-			profService.registrar(profile);
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			log.fatal("Exception: ", e);
-		}
-
-		log.info("---Finaliza insercion de Profile---");
-
-		log.info("---Empieza creacion de Respuesta---");
-
-		JsonElement profileDTO = null;
-		profileDTO =  new Gson().toJsonTree(Util.profileJPAtoDTO(profile));
-
-		json.add("profile",profileDTO);
-		json.addProperty("message", "");
-		json.addProperty("response", true);
-
-		result = json.toString();
-
-
-		log.info("---Finaliza creacion de Respuesta---");
-
-		log.info("salio POST: signUp()");
-		return result;
-	}
 
 
 

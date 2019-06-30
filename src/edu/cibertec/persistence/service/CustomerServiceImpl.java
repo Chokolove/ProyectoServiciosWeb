@@ -39,8 +39,24 @@ public class CustomerServiceImpl implements ICustomerService{
 	@Override
 	public Customer registrar(Customer Customer) throws Exception {
 		log.info("Se ingreso a registrar()");
+		
+
+		try {
+
+			custJPA.createEM();
+			custJPA.beginTransaction();
+			custJPA.registrar(Customer);
+			custJPA.flush();
+			custJPA.endTransaction();
+
+		} catch (Exception e) {
+			log.error("Algo salio mal al registrar Customer");
+			custJPA.rollbackTransaction();
+			log.fatal("Exception: ", e);
+		}
+		
 		log.info("Se salio de registrar()");
-		return null;
+		return Customer;
 	}
 
 	@Override
