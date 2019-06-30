@@ -132,27 +132,27 @@ public class RestPost {
 		log.info("Saliendo a POST: validarLogin()");
 		return result;
 	}
-	/*
-	//http://localhost:8080/api-rest/post/validacionEmail/
+	
+	//http://localhost:8080/api-rest/post/validacionCustomer/
 	@POST
-	@Path("/validacionEmail")
+	@Path("/validacionCustomer")
 	@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 	@Produces(MediaType.APPLICATION_JSON)
-	public String validacionEmail( UsuarioDTO usu) {
-		log.info("Entrando a POST: validarLogin()");
+	public String validacionCustomer( CustomerDTO usu) {
+		log.info("Entrando a POST: validacionCustomer()");
 
 		JsonObject json = new JsonObject();
 		String result = "";
 
 		log.info("---Inicia validacion de Correo---");
 
-		List<Account> listaAccJPA = new ArrayList<Account>();
+		List<Customer> listaCusJPA = new ArrayList<Customer>();
 		try {
-			listaAccJPA = accService.getAccounts();
-			for(Account acc:listaAccJPA) {
-				if(usu.getEmail().equals(acc.getEmail())) {
+			listaCusJPA = cusService.getCustomers();
+			for(Customer cus:listaCusJPA) {
+				if(usu.getEmail().equals(cus.getEmail()) || usu.getPhone()==cus.getPhone()) {
 
-					json.addProperty("message", "El email ingresado ya se encuentra registrado");
+					json.addProperty("message", "El email/numero ingresado ya se encuentra registrado");
 					json.addProperty("response", false);
 					log.error("El email ingresado ya se encuentra registrado");
 					result = json.toString();
@@ -160,19 +160,19 @@ public class RestPost {
 				}
 			}
 
-			json.addProperty("message", "Email Disponible");
+			json.addProperty("message", "Email/Numero Disponible");
 			json.addProperty("response", true);
 			result = json.toString();
-			log.info("El email disponible");
+			log.info("El email/numero disponible");
 
 			log.info("---Finaliza busqueda cuentas---");
 		} catch (Exception e) {
 			log.fatal("Exception: ", e);
 		}
-		log.info("---Finaliza validacion de Correo---");
+		log.info("---Finaliza validacion de Customer---");
 		return result;
 	}
-
+/*
 	//http://localhost:8080/api-rest/post/signUp/
 	@POST
 	@Path("/signUp")

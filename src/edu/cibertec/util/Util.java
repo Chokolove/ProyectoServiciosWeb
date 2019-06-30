@@ -104,6 +104,20 @@ public class Util {
 		
 		return dto;
 	}
+	
+	public static SoccerFieldDTO SoccerFieldJADVPAtoDTO (SoccerField soc) {
+		SoccerFieldDTO dto = new SoccerFieldDTO();
+		
+		dto.setId(soc.getId());
+		dto.setDescription(soc.getDescription());
+		dto.setLocal(Util.localJPAtoDTO(soc.getLocal()));
+		dto.setPrice(soc.getPrice());
+		
+		log.info("ID: "+soc.getId());
+		log.info("DES:"+soc.getDescription());
+		
+		return dto;
+	}
 	public static SoccerFieldDTO SoccerFieldJPAtoDTO (SoccerField soc) {
 		SoccerFieldDTO dto = new SoccerFieldDTO();
 		
@@ -137,7 +151,7 @@ public class Util {
 		dto.setDay(res.getDate());
 		dto.setStart(res.getStart());
 		dto.setEnd(res.getEnd());
-		dto.setSoccerFieldDTO(Util.SoccerFieldJPAtoDTO(res.getSoccerField()));
+		dto.setSoccerFieldDTO(Util.SoccerFieldJADVPAtoDTO(res.getSoccerField()));
 		dto.setChargeId(res.getChargeId());
 		dto.setChargeAmount(res.getChargeAmount());
 		dto.setCreatedAt(res.getCreatedAt());
