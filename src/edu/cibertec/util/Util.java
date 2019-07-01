@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import edu.cibertec.dto.AccountDTO;
 import edu.cibertec.dto.CustomerDTO;
+import edu.cibertec.dto.GuestInsertDTO;
 import edu.cibertec.dto.LocNonDaysDTO;
 import edu.cibertec.dto.LocWorDayDTO;
 import edu.cibertec.dto.LocalDTO;
@@ -14,6 +15,7 @@ import edu.cibertec.dto.ReviewDTO;
 import edu.cibertec.dto.SoccerFieldDTO;
 import edu.cibertec.entity.Account;
 import edu.cibertec.entity.Customer;
+import edu.cibertec.entity.Guest;
 import edu.cibertec.entity.Local;
 import edu.cibertec.entity.LocalNonWorkingDay;
 import edu.cibertec.entity.LocalWorkingWeekDay;
@@ -197,5 +199,22 @@ public class Util {
 		log.info(""+dto.getStars());
 		
 		return dto;
+	}
+	public static Guest guestDTOtoJPA(GuestInsertDTO dto) {
+		Guest guest= new Guest();
+		
+		guest.setId(dto.getId());
+		guest.setCreatedAt(dto.getCreatedAt());
+		guest.setEmail(dto.getEmail());
+		guest.setFirstName(dto.getFirstName());
+		guest.setLastName(dto.getLastName());
+		guest.setPhone(dto.getPhone());
+		
+		log.info(""+dto.getId());
+		log.info(""+dto.getEmail());
+		log.info(""+dto.getFirstName());
+		log.info(""+dto.getLastName());
+		
+		return null;
 	}
 }

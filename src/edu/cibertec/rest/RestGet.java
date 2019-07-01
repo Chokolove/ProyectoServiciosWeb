@@ -54,29 +54,7 @@ public class RestGet {
 	LocalNonWorkingDayServiceImpl  lnwdService = new LocalNonWorkingDayServiceImpl();
 	ReservationServiceImpl reservService = new ReservationServiceImpl();
 	ResviewServiceImpl revService = new ResviewServiceImpl();
-	/*
-	//http://localhost:8080/api-rest/get/obtenerDatosAccount/
-	@GET
-	@Path("/obtenerDatosAccount")
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<AccountDTO> obtenerDatosAccount() {
-		log.info("entro obtenerDatosAccount()");
-		List<AccountDTO> listaAccount = new ArrayList<AccountDTO>();
-		List<Account> listaAccJPA = new ArrayList<Account>();
-
-		try {
-			listaAccJPA = accService.getAccounts();
-			for(Account acc:listaAccJPA) {
-				listaAccount.add(Util.accJPAtoDTO(acc));
-			}
-			log.info("Finaliza busqueda");
-		} catch (Exception e) {
-			log.fatal("Exception: ", e);
-		}
-		log.info("Saliendo de obtenerDatosAccount()");
-		return listaAccount;
-	}
-	 */
+	
 
 	//http://localhost:8080/api-rest/get/obtenerdatoslocal/
 	@GET

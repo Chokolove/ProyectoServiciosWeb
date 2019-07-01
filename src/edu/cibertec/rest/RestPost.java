@@ -21,6 +21,7 @@ import com.google.gson.JsonObject;
 
 import edu.cibertec.dto.CustomerAdvDTO;
 import edu.cibertec.dto.CustomerDTO;
+import edu.cibertec.dto.GuestInsertDTO;
 import edu.cibertec.dto.LoginDTO;
 import edu.cibertec.dto.ReservInsertDTO;
 import edu.cibertec.dto.ReviewInsertDTO;
@@ -33,6 +34,7 @@ import edu.cibertec.entity.Review;
 import edu.cibertec.entity.SoccerField;
 import edu.cibertec.persistence.service.AccountServiceImpl;
 import edu.cibertec.persistence.service.CustomerServiceImpl;
+import edu.cibertec.persistence.service.GuestServiceImpl;
 import edu.cibertec.persistence.service.LocalServiceImpl;
 import edu.cibertec.persistence.service.ReservationServiceImpl;
 import edu.cibertec.persistence.service.ResviewServiceImpl;
@@ -48,6 +50,7 @@ public class RestPost {
 	CustomerServiceImpl cusService = new CustomerServiceImpl();
 	ResviewServiceImpl revService = new ResviewServiceImpl();
 	LocalServiceImpl locService = new LocalServiceImpl();
+	GuestServiceImpl guestService = new GuestServiceImpl();
 
 	static final Logger log = Logger.getLogger(RestPost.class);
 
@@ -378,66 +381,48 @@ public class RestPost {
 
 
 	}
-	/*
-
-
-
-
-
-
-	//http://localhost:8080/api-rest/post/updateReview/
+	
+	
+	
+	//http://localhost:8080/api-rest/post/signGuest/
 		@POST
-		@Path("/updateReview")
+		@Path("/signGuest")
 		@Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_XML})
 		@Produces(MediaType.APPLICATION_JSON)
-		public String updateReview( ReviewInsert rev) {
-			log.info("entro POST: updateReview()");
+		public String signGuest( GuestInsertDTO guestInsertDTO) {
+			LocalDateTime now = LocalDateTime.now();
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+	        String formatDateTime = now.format(formatter);
+			
+			log.info("entro POST: signGuest()");
 
 			JsonObject json = new JsonObject();
 			String result = "";
-			Review revJPA = new Review();
 
-			List<Account> listAcc = null;
-			List<Local> listLoc = null;
+			log.info("---Empieza Creacion de objeto Guest---");
+
+			Guest guest = new Guest();
+			guest = Util.guestDTOtoJPA(guestInsertDTO);
 
 			try {
-				listAcc = accService.getAccounts();
-				listLoc = locService.getLocals();
-
-				for(Account acc:listAcc) {
-					if(rev.getAccount_id()==acc.getId()) {
-						revJPA.setAccount(acc);
-					}
-				}
-
-				for(Local loc:listLoc) {
-					if(rev.getLocal_id()==loc.getId()) {
-						revJPA.setLocal(loc);
-					}
-				}
-
-				revJPA.setStars(rev.getStars());
-				revJPA.setCommentary(rev.getCommentary());
-
-				revService.actualizar(revJPA);
-
+				guest = guestService.registrar(guest);
 			} catch (Exception e) {
 				log.fatal("Exception: ", e);
+				json.addProperty("message", "Algo salio mal al registrar Guest...");
+				json.addProperty("response", false);
+				result = json.toString();
+				log.info("salio POST: signGuest()");
+				return result;
 			}
+			log.info("---Finaliza insercion de Account---");
 
-			JsonElement revJson = null;
-			revJson = new Gson().toJsonTree(Util.reviewJPAtoDTO(revJPA));
-
-			json.add("review", revJson);
 			json.addProperty("message", "");
 			json.addProperty("response", true);
-
 			result = json.toString();
 
-
-
-			log.info("salio POST: updateReview()");
+			log.info("salio POST: signGuest()");
 			return result;
 		}
-	 */
+	
+	
 }
