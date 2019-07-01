@@ -399,7 +399,7 @@ public class RestPost {
 			JsonObject json = new JsonObject();
 			String result = "";
 
-			log.info("---Empieza Creacion de objeto Guest---");
+			log.info("---Empieza Insercion de Guest---");
 
 			Guest guest = new Guest();
 			guest = Util.guestDTOtoJPA(guestInsertDTO);
@@ -414,7 +414,7 @@ public class RestPost {
 				log.info("salio POST: signGuest()");
 				return result;
 			}
-			log.info("---Finaliza insercion de Account---");
+			log.info("---Finaliza insercion de Guest---");
 
 			json.addProperty("message", "");
 			json.addProperty("response", true);

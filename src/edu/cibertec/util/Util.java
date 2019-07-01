@@ -215,6 +215,6 @@ public class Util {
 		log.info(""+dto.getFirstName());
 		log.info(""+dto.getLastName());
 		
-		return null;
+		return guest;
 	}
 }
